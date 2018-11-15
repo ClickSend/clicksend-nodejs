@@ -5384,7 +5384,7 @@ export class EmailMarketingApi {
      * @param dateFrom Start date
      * @param dateTo End date
      */
-    public emailCampaignHistoryExportGet (emailCampaignId: number, dateFrom?: number, dateTo?: number) : Promise<{ response: http.IncomingMessage; body: Buffer;  }> {
+    public emailCampaignHistoryExportGet (emailCampaignId: number, dateFrom?: number, dateTo?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email-campaigns/{email_campaign_id}/history/export'
             .replace('{' + 'email_campaign_id' + '}', encodeURIComponent(String(emailCampaignId)));
         let localVarQueryParameters: any = {};
@@ -5413,7 +5413,7 @@ export class EmailMarketingApi {
             headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
-            encoding: null,
+            json: true,
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -5427,12 +5427,12 @@ export class EmailMarketingApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Buffer;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Buffer");
+                    body = ObjectSerializer.deserialize(body, "string");
                     if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -9304,7 +9304,7 @@ export class PostLetterApi {
      * @summary export post letter history
      * @param filename Filename to export to
      */
-    public postLettersExportGet (filename: string) : Promise<{ response: http.IncomingMessage; body: Buffer;  }> {
+    public postLettersExportGet (filename: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/letters/export';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9328,7 +9328,7 @@ export class PostLetterApi {
             headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
-            encoding: null,
+            json: true,
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -9342,12 +9342,12 @@ export class PostLetterApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Buffer;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Buffer");
+                    body = ObjectSerializer.deserialize(body, "string");
                     if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -9586,7 +9586,7 @@ export class PostPostcardApi {
      * @summary Export postcard history to a CSV file
      * @param filename Filename to export to
      */
-    public postPostcardsHistoryExportGet (filename: string) : Promise<{ response: http.IncomingMessage; body: Buffer;  }> {
+    public postPostcardsHistoryExportGet (filename: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/postcards/history/export';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9610,7 +9610,7 @@ export class PostPostcardApi {
             headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
-            encoding: null,
+            json: true,
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -9624,12 +9624,12 @@ export class PostPostcardApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Buffer;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Buffer");
+                    body = ObjectSerializer.deserialize(body, "string");
                     if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -10712,7 +10712,7 @@ export class SMSApi {
      * @summary Export all sms history
      * @param filename Filename to download history as
      */
-    public smsHistoryExportGet (filename: string) : Promise<{ response: http.IncomingMessage; body: Buffer;  }> {
+    public smsHistoryExportGet (filename: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/history/export';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -10736,7 +10736,7 @@ export class SMSApi {
             headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
-            encoding: null,
+            json: true,
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -10750,12 +10750,12 @@ export class SMSApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Buffer;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Buffer");
+                    body = ObjectSerializer.deserialize(body, "string");
                     if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -13188,7 +13188,7 @@ export class TransactionalEmailApi {
      * @param dateFrom Start date
      * @param dateTo End date
      */
-    public emailHistoryExportGet (filename: string, dateFrom?: number, dateTo?: number) : Promise<{ response: http.IncomingMessage; body: Buffer;  }> {
+    public emailHistoryExportGet (filename: string, dateFrom?: number, dateTo?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/history/export';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13220,7 +13220,7 @@ export class TransactionalEmailApi {
             headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
-            encoding: null,
+            json: true,
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -13234,12 +13234,12 @@ export class TransactionalEmailApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Buffer;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Buffer");
+                    body = ObjectSerializer.deserialize(body, "string");
                     if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -14164,7 +14164,7 @@ export class VoiceApi {
      * @summary Export voice history
      * @param filename Filename to export to
      */
-    public voiceHistoryExportGet (filename: string) : Promise<{ response: http.IncomingMessage; body: Buffer;  }> {
+    public voiceHistoryExportGet (filename: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/voice/history/export';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14188,7 +14188,7 @@ export class VoiceApi {
             headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
-            encoding: null,
+            json: true,
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -14202,12 +14202,12 @@ export class VoiceApi {
                 localVarRequestOptions.form = localVarFormParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Buffer;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
             localVarRequest(localVarRequestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Buffer");
+                    body = ObjectSerializer.deserialize(body, "string");
                     if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
