@@ -834,6 +834,10 @@ export class Email {
     */
     'from': Array<EmailFrom>;
     /**
+    * Subject of the email.
+    */
+    'subject'?: string;
+    /**
     * Body of the email.
     */
     'body': string;
@@ -868,6 +872,11 @@ export class Email {
             "name": "from",
             "baseName": "from",
             "type": "Array<EmailFrom>"
+        },
+        {
+            "name": "subject",
+            "baseName": "subject",
+            "type": "string"
         },
         {
             "name": "body",
@@ -1052,6 +1061,10 @@ export class EmailSMSAddress {
     * Your sender id
     */
     'from': string;
+    /**
+    * Your subaccount id
+    */
+    'subaccountId'?: string;
 
     static discriminator: string | undefined = "classType";
 
@@ -1064,6 +1077,11 @@ export class EmailSMSAddress {
         {
             "name": "from",
             "baseName": "from",
+            "type": "string"
+        },
+        {
+            "name": "subaccountId",
+            "baseName": "subaccount_id",
             "type": "string"
         }    ];
 
@@ -5631,8 +5649,9 @@ export class EmailMarketingApi {
      * Edit email campaign
      * @summary Edit email campaign
      * @param emailCampaignId Allowed email campaign id
+     * @param emailCampaign Email model
      */
-    public emailCampaignPut (emailCampaignId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailCampaignPut (emailCampaignId: number, emailCampaign: EmailCampaign) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email-campaigns/{email_campaign_id}'
             .replace('{' + 'email_campaign_id' + '}', encodeURIComponent(String(emailCampaignId)));
         let localVarQueryParameters: any = {};
@@ -5642,6 +5661,11 @@ export class EmailMarketingApi {
         // verify required parameter 'emailCampaignId' is not null or undefined
         if (emailCampaignId === null || emailCampaignId === undefined) {
             throw new Error('Required parameter emailCampaignId was null or undefined when calling emailCampaignPut.');
+        }
+
+        // verify required parameter 'emailCampaign' is not null or undefined
+        if (emailCampaign === null || emailCampaign === undefined) {
+            throw new Error('Required parameter emailCampaign was null or undefined when calling emailCampaignPut.');
         }
 
 
@@ -5654,6 +5678,7 @@ export class EmailMarketingApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
+            body: ObjectSerializer.serialize(emailCampaign, "EmailCampaign")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -5761,7 +5786,7 @@ export class EmailMarketingApi {
         let localVarUseFormData = false;
 
         let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
+            method: 'PUT',
             qs: localVarQueryParameters,
             headers: localVarHeaderParams,
             uri: localVarPath,
@@ -5933,7 +5958,7 @@ export class EmailMarketingApi {
         let localVarUseFormData = false;
 
         let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
+            method: 'PUT',
             qs: localVarQueryParameters,
             headers: localVarHeaderParams,
             uri: localVarPath,
