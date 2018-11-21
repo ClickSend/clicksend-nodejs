@@ -990,9 +990,9 @@ export class EmailCampaign {
 */
 export class EmailFrom {
     /**
-    * Email of the recipient.
+    * Email address id of the recipient.
     */
-    'email': string;
+    'emailAddressId': string;
     /**
     * Name of the recipient.
     */
@@ -1002,8 +1002,8 @@ export class EmailFrom {
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
-            "name": "email",
-            "baseName": "email",
+            "name": "emailAddressId",
+            "baseName": "email_address_id",
             "type": "string"
         },
         {
@@ -1269,6 +1269,164 @@ export class FaxMessageCollection {
 
     static getAttributeTypeMap() {
         return FaxMessageCollection.attributeTypeMap;
+    }
+}
+
+/**
+* Contains all details for the main contact.
+*/
+export class Fields {
+    /**
+    * Your phone number in E.164 format. Must be provided if no fax number or email.
+    */
+    'phoneNumber'?: string;
+    /**
+    * 
+    */
+    'custom1'?: string;
+    /**
+    * Your email. Must be provided if no phone number or fax number.
+    */
+    'email'?: string;
+    /**
+    * Your fax number. Must be provided if no phone number or email.
+    */
+    'faxNumber'?: string;
+    /**
+    * Your first name.
+    */
+    'firstName'?: string;
+    /**
+    * Your street address
+    */
+    'addressLine1'?: string;
+    /**
+    * 
+    */
+    'addressLine2'?: string;
+    /**
+    * Your nearest city
+    */
+    'addressCity'?: string;
+    /**
+    * Your current state
+    */
+    'addressState'?: string;
+    /**
+    * Your current postcode
+    */
+    'addressPostalCode'?: string;
+    /**
+    * Your current country
+    */
+    'addressCountry'?: string;
+    /**
+    * Your organisation name
+    */
+    'organizationName'?: string;
+    /**
+    * 
+    */
+    'custom2'?: string;
+    /**
+    * 
+    */
+    'custom3'?: string;
+    /**
+    * 
+    */
+    'custom4'?: string;
+    /**
+    * Your last name
+    */
+    'lastName'?: string;
+
+    static discriminator: string | undefined = "classType";
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "phoneNumber",
+            "baseName": "phone_number",
+            "type": "string"
+        },
+        {
+            "name": "custom1",
+            "baseName": "custom_1",
+            "type": "string"
+        },
+        {
+            "name": "email",
+            "baseName": "email",
+            "type": "string"
+        },
+        {
+            "name": "faxNumber",
+            "baseName": "fax_number",
+            "type": "string"
+        },
+        {
+            "name": "firstName",
+            "baseName": "first_name",
+            "type": "string"
+        },
+        {
+            "name": "addressLine1",
+            "baseName": "address_line_1",
+            "type": "string"
+        },
+        {
+            "name": "addressLine2",
+            "baseName": "address_line_2",
+            "type": "string"
+        },
+        {
+            "name": "addressCity",
+            "baseName": "address_city",
+            "type": "string"
+        },
+        {
+            "name": "addressState",
+            "baseName": "address_state",
+            "type": "string"
+        },
+        {
+            "name": "addressPostalCode",
+            "baseName": "address_postal_code",
+            "type": "string"
+        },
+        {
+            "name": "addressCountry",
+            "baseName": "address_country",
+            "type": "string"
+        },
+        {
+            "name": "organizationName",
+            "baseName": "organization_name",
+            "type": "string"
+        },
+        {
+            "name": "custom2",
+            "baseName": "custom_2",
+            "type": "string"
+        },
+        {
+            "name": "custom3",
+            "baseName": "custom_3",
+            "type": "string"
+        },
+        {
+            "name": "custom4",
+            "baseName": "custom_4",
+            "type": "string"
+        },
+        {
+            "name": "lastName",
+            "baseName": "last_name",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Fields.attributeTypeMap;
     }
 }
 
@@ -2534,6 +2692,7 @@ let typeMap: {[index: string]: any} = {
     "EmailTemplateUpdate": EmailTemplateUpdate,
     "FaxMessage": FaxMessage,
     "FaxMessageCollection": FaxMessageCollection,
+    "Fields": Fields,
     "InboundFAXRule": InboundFAXRule,
     "InboundSMSRule": InboundSMSRule,
     "MmsCampaign": MmsCampaign,
@@ -2878,7 +3037,7 @@ export class AccountApi {
     /**
      * Forgot password
      * @summary Forgot password
-     * @param username Username belonging to account
+     * @param username Username belonging to account.
      */
     public forgotPasswordPut (username: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/forgot-password';
@@ -2894,6 +3053,10 @@ export class AccountApi {
 
         let localVarUseFormData = false;
 
+        if (username !== undefined) {
+            localVarFormParams['username'] = ObjectSerializer.serialize(username, "string");
+        }
+
         let localVarRequestOptions: localVarRequest.Options = {
             method: 'PUT',
             qs: localVarQueryParameters,
@@ -2901,7 +3064,6 @@ export class AccountApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(username, "string")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -2988,21 +3150,25 @@ export class AccountApi {
     /**
      * Forgot username
      * @summary Forgot username
-     * @param email Email belonging to account
+     * @param email Email belonging to account.
+     * @param phoneNumber Phone number belonging to account.
      */
-    public forgotUsernamePut (email: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public forgotUsernamePut (email?: string, phoneNumber?: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/forgot-username';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'email' is not null or undefined
-        if (email === null || email === undefined) {
-            throw new Error('Required parameter email was null or undefined when calling forgotUsernamePut.');
-        }
-
 
         let localVarUseFormData = false;
+
+        if (email !== undefined) {
+            localVarFormParams['email'] = ObjectSerializer.serialize(email, "string");
+        }
+
+        if (phoneNumber !== undefined) {
+            localVarFormParams['phone_number'] = ObjectSerializer.serialize(phoneNumber, "string");
+        }
 
         let localVarRequestOptions: localVarRequest.Options = {
             method: 'PUT',
@@ -3011,7 +3177,6 @@ export class AccountApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(email, "string")
         };
 
         this.authentications.default.applyToRequest(localVarRequestOptions);
@@ -4342,8 +4507,9 @@ export class ContactListApi {
      * Remove duplicate contacts
      * @summary Remove duplicate contacts
      * @param listId Your list id
+     * @param fields Fields model
      */
-    public listsRemoveDuplicatesByListIdPut (listId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsRemoveDuplicatesByListIdPut (listId: number, fields: Fields) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}/remove-duplicates'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -4353,6 +4519,11 @@ export class ContactListApi {
         // verify required parameter 'listId' is not null or undefined
         if (listId === null || listId === undefined) {
             throw new Error('Required parameter listId was null or undefined when calling listsRemoveDuplicatesByListIdPut.');
+        }
+
+        // verify required parameter 'fields' is not null or undefined
+        if (fields === null || fields === undefined) {
+            throw new Error('Required parameter fields was null or undefined when calling listsRemoveDuplicatesByListIdPut.');
         }
 
 
@@ -4365,6 +4536,7 @@ export class ContactListApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
+            body: ObjectSerializer.serialize(fields, "Fields")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -5249,6 +5421,10 @@ export class EmailMarketingApi {
 
         let localVarUseFormData = false;
 
+        if (emailAddress !== undefined) {
+            localVarFormParams['email_address'] = ObjectSerializer.serialize(emailAddress, "string");
+        }
+
         let localVarRequestOptions: localVarRequest.Options = {
             method: 'POST',
             qs: localVarQueryParameters,
@@ -5256,7 +5432,6 @@ export class EmailMarketingApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(emailAddress, "string")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -6274,21 +6449,25 @@ export class EmailToSmsApi {
     /**
      * Create email to sms stripped string rules
      * @summary Create email to sms stripped string rule
-     * @param strippedString String to be stripped.
+     * @param stripString String to be stripped.
      */
-    public smsEmailSmsStrippedStringPost (strippedString: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsEmailSmsStrippedStringPost (stripString: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/email-sms-stripped-strings';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'strippedString' is not null or undefined
-        if (strippedString === null || strippedString === undefined) {
-            throw new Error('Required parameter strippedString was null or undefined when calling smsEmailSmsStrippedStringPost.');
+        // verify required parameter 'stripString' is not null or undefined
+        if (stripString === null || stripString === undefined) {
+            throw new Error('Required parameter stripString was null or undefined when calling smsEmailSmsStrippedStringPost.');
         }
 
 
         let localVarUseFormData = false;
+
+        if (stripString !== undefined) {
+            localVarFormParams['strip-string'] = ObjectSerializer.serialize(stripString, "string");
+        }
 
         let localVarRequestOptions: localVarRequest.Options = {
             method: 'POST',
@@ -6297,7 +6476,6 @@ export class EmailToSmsApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(strippedString, "string")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -6329,28 +6507,32 @@ export class EmailToSmsApi {
     /**
      * Update email to sms stripped string rule
      * @summary Update email to sms stripped string rule
+     * @param stripString String to be stripped.
      * @param ruleId Your rule id
-     * @param strippedString String to be stripped.
      */
-    public smsEmailSmsStrippedStringPut (ruleId: number, strippedString: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsEmailSmsStrippedStringPut (stripString: string, ruleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/email-sms-stripped-strings/{rule_id}'
             .replace('{' + 'rule_id' + '}', encodeURIComponent(String(ruleId)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        // verify required parameter 'stripString' is not null or undefined
+        if (stripString === null || stripString === undefined) {
+            throw new Error('Required parameter stripString was null or undefined when calling smsEmailSmsStrippedStringPut.');
+        }
+
         // verify required parameter 'ruleId' is not null or undefined
         if (ruleId === null || ruleId === undefined) {
             throw new Error('Required parameter ruleId was null or undefined when calling smsEmailSmsStrippedStringPut.');
         }
 
-        // verify required parameter 'strippedString' is not null or undefined
-        if (strippedString === null || strippedString === undefined) {
-            throw new Error('Required parameter strippedString was null or undefined when calling smsEmailSmsStrippedStringPut.');
-        }
-
 
         let localVarUseFormData = false;
+
+        if (stripString !== undefined) {
+            localVarFormParams['strip-string'] = ObjectSerializer.serialize(stripString, "string");
+        }
 
         let localVarRequestOptions: localVarRequest.Options = {
             method: 'PUT',
@@ -6359,7 +6541,6 @@ export class EmailToSmsApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(strippedString, "string")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -10919,7 +11100,7 @@ export class SMSApi {
     /**
      * Create inbound sms
      * @summary Create inbound sms
-     * @param url Your url
+     * @param url Your url.
      */
     public smsInboundPost (url: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/inbound';
@@ -10935,6 +11116,10 @@ export class SMSApi {
 
         let localVarUseFormData = false;
 
+        if (url !== undefined) {
+            localVarFormParams['url'] = ObjectSerializer.serialize(url, "string");
+        }
+
         let localVarRequestOptions: localVarRequest.Options = {
             method: 'POST',
             qs: localVarQueryParameters,
@@ -10942,7 +11127,6 @@ export class SMSApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(url, "string")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -11192,7 +11376,7 @@ export class SMSApi {
     /**
      * Add a delivery receipt
      * @summary Add a delivery receipt
-     * @param url Your url
+     * @param url Your url.
      */
     public smsReceiptsPost (url: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/receipts';
@@ -11208,6 +11392,10 @@ export class SMSApi {
 
         let localVarUseFormData = false;
 
+        if (url !== undefined) {
+            localVarFormParams['url'] = ObjectSerializer.serialize(url, "string");
+        }
+
         let localVarRequestOptions: localVarRequest.Options = {
             method: 'POST',
             qs: localVarQueryParameters,
@@ -11215,7 +11403,6 @@ export class SMSApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(url, "string")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -13622,7 +13809,7 @@ export class UploadApi {
     /**
      * Upload File
      * @summary Upload File
-     * @param content Base64-encoded file contents
+     * @param content Your base64 encoded file.
      * @param convert 
      */
     public uploadsPost (content: string, convert: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
@@ -13648,6 +13835,10 @@ export class UploadApi {
 
         let localVarUseFormData = false;
 
+        if (content !== undefined) {
+            localVarFormParams['content'] = ObjectSerializer.serialize(content, "string");
+        }
+
         let localVarRequestOptions: localVarRequest.Options = {
             method: 'POST',
             qs: localVarQueryParameters,
@@ -13655,7 +13846,6 @@ export class UploadApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(content, "string")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -13932,7 +14122,7 @@ export class UserEmailTemplatesApi {
         let localVarUseFormData = false;
 
         let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
+            method: 'PUT',
             qs: localVarQueryParameters,
             headers: localVarHeaderParams,
             uri: localVarPath,
