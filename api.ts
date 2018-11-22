@@ -829,10 +829,7 @@ export class Email {
     * Array of Bcc Recipient items.
     */
     'bcc'?: Array<EmailRecipient>;
-    /**
-    * From Email object.
-    */
-    'from': Array<EmailFrom>;
+    'from': EmailFrom;
     /**
     * Subject of the email.
     */
@@ -871,7 +868,7 @@ export class Email {
         {
             "name": "from",
             "baseName": "from",
-            "type": "Array<EmailFrom>"
+            "type": "EmailFrom"
         },
         {
             "name": "subject",
@@ -1006,7 +1003,7 @@ export class EmailCampaign {
 }
 
 /**
-* Email being sent from
+* From Email object.
 */
 export class EmailFrom {
     /**
@@ -1018,7 +1015,7 @@ export class EmailFrom {
     */
     'name'?: string;
 
-    static discriminator: string | undefined = "classType";
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -1632,6 +1629,29 @@ export class InboundSMSRule {
 
     static getAttributeTypeMap() {
         return InboundSMSRule.attributeTypeMap;
+    }
+}
+
+/**
+* Your list.
+*/
+export class List {
+    /**
+    * Your list name.
+    */
+    'listName': string;
+
+    static discriminator: string | undefined = "classType";
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "listName",
+            "baseName": "list_name",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return List.attributeTypeMap;
     }
 }
 
@@ -2502,7 +2522,7 @@ export class StrippedString {
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
             "name": "stripString",
-            "baseName": "strip-string",
+            "baseName": "strip_string",
             "type": "string"
         }    ];
 
@@ -2833,6 +2853,7 @@ let typeMap: {[index: string]: any} = {
     "ForgotUsername": ForgotUsername,
     "InboundFAXRule": InboundFAXRule,
     "InboundSMSRule": InboundSMSRule,
+    "List": List,
     "MmsCampaign": MmsCampaign,
     "MmsMessage": MmsMessage,
     "MmsMessageCollection": MmsMessageCollection,
@@ -4395,9 +4416,9 @@ export class ContactListApi {
      * Update specific contact list
      * @summary Update specific contact list
      * @param listId Your list id
-     * @param listName Your new list name
+     * @param list List model
      */
-    public listsByListIdPut (listId: number, listName: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsByListIdPut (listId: number, list: Array) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -4409,9 +4430,9 @@ export class ContactListApi {
             throw new Error('Required parameter listId was null or undefined when calling listsByListIdPut.');
         }
 
-        // verify required parameter 'listName' is not null or undefined
-        if (listName === null || listName === undefined) {
-            throw new Error('Required parameter listName was null or undefined when calling listsByListIdPut.');
+        // verify required parameter 'list' is not null or undefined
+        if (list === null || list === undefined) {
+            throw new Error('Required parameter list was null or undefined when calling listsByListIdPut.');
         }
 
 
@@ -4424,7 +4445,7 @@ export class ContactListApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(listName, "string")
+            body: ObjectSerializer.serialize(list, "Array")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -4576,17 +4597,17 @@ export class ContactListApi {
     /**
      * Create new contact list
      * @summary Create new contact list
-     * @param listName Your contact list name
+     * @param list List model
      */
-    public listsPost (listName: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsPost (list: Array) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'listName' is not null or undefined
-        if (listName === null || listName === undefined) {
-            throw new Error('Required parameter listName was null or undefined when calling listsPost.');
+        // verify required parameter 'list' is not null or undefined
+        if (list === null || list === undefined) {
+            throw new Error('Required parameter list was null or undefined when calling listsPost.');
         }
 
 
@@ -4599,7 +4620,7 @@ export class ContactListApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(listName, "string")
+            body: ObjectSerializer.serialize(list, "Array")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -6621,19 +6642,19 @@ export class EmailToSmsApi {
     /**
      * Update email to sms stripped string rule
      * @summary Update email to sms stripped string rule
-     * @param url Url model
+     * @param strippedString StrippedString model
      * @param ruleId Your rule id
      */
-    public smsEmailSmsStrippedStringPut (url: Url, ruleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsEmailSmsStrippedStringPut (strippedString: StrippedString, ruleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/email-sms-stripped-strings/{rule_id}'
             .replace('{' + 'rule_id' + '}', encodeURIComponent(String(ruleId)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'url' is not null or undefined
-        if (url === null || url === undefined) {
-            throw new Error('Required parameter url was null or undefined when calling smsEmailSmsStrippedStringPut.');
+        // verify required parameter 'strippedString' is not null or undefined
+        if (strippedString === null || strippedString === undefined) {
+            throw new Error('Required parameter strippedString was null or undefined when calling smsEmailSmsStrippedStringPut.');
         }
 
         // verify required parameter 'ruleId' is not null or undefined
@@ -6651,7 +6672,7 @@ export class EmailToSmsApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(url, "Url")
+            body: ObjectSerializer.serialize(strippedString, "StrippedString")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -9622,7 +9643,7 @@ export class PostLetterApi {
      * @param filename Filename to export to
      */
     public postLettersExportGet (filename: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
-        const localVarPath = this.basePath + '/post/letters/export';
+        const localVarPath = this.basePath + '/post/letters/history/export';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
