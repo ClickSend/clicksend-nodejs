@@ -8725,7 +8725,7 @@ export class MmsCampaignApi {
      * @param mmsCampaignId ID of MMS campaign to retrieve
      */
     public mmsCampaignByMmsCampaignIdGet (mmsCampaignId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
-        const localVarPath = this.basePath + '/mms-campaign/{mms_campaign_id}'
+        const localVarPath = this.basePath + '/mms-campaigns/{mms_campaign_id}'
             .replace('{' + 'mms_campaign_id' + '}', encodeURIComponent(String(mmsCampaignId)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -12440,7 +12440,7 @@ export class SmsCampaignApi {
      * @param smsCampaignId ID of SMS campaign to retrieve
      */
     public smsCampaignBySmsCampaignIdGet (smsCampaignId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
-        const localVarPath = this.basePath + '/sms-campaign/{sms_campaign_id}'
+        const localVarPath = this.basePath + '/sms-campaigns/{sms_campaign_id}'
             .replace('{' + 'sms_campaign_id' + '}', encodeURIComponent(String(smsCampaignId)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
