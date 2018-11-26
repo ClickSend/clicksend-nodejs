@@ -1293,6 +1293,26 @@ export class FaxMessageCollection {
 * Contains all details for the main contact.
 */
 export class Fields {
+    'fields'?: FieldsFields;
+
+    static discriminator: string | undefined = "classType";
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "fields",
+            "baseName": "fields",
+            "type": "FieldsFields"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Fields.attributeTypeMap;
+    }
+}
+
+/**
+* From Email object.
+*/
+export class FieldsFields {
     /**
     * Your phone number in E.164 format. Must be provided if no fax number or email.
     */
@@ -1358,7 +1378,7 @@ export class Fields {
     */
     'lastName'?: string;
 
-    static discriminator: string | undefined = "classType";
+    static discriminator: string | undefined = undefined;
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -1443,7 +1463,7 @@ export class Fields {
         }    ];
 
     static getAttributeTypeMap() {
-        return Fields.attributeTypeMap;
+        return FieldsFields.attributeTypeMap;
     }
 }
 
@@ -2849,6 +2869,7 @@ let typeMap: {[index: string]: any} = {
     "FaxMessage": FaxMessage,
     "FaxMessageCollection": FaxMessageCollection,
     "Fields": Fields,
+    "FieldsFields": FieldsFields,
     "ForgotPassword": ForgotPassword,
     "ForgotUsername": ForgotUsername,
     "InboundFAXRule": InboundFAXRule,
