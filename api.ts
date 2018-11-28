@@ -2664,13 +2664,16 @@ export class Subaccount {
     }
 }
 
+/**
+* Your file to be uploaded.
+*/
 export class UploadFile {
     /**
-    * Your base64 encoded file.
+    * Your base64 encoded file string.
     */
     'content': string;
 
-    static discriminator: string | undefined = undefined;
+    static discriminator: string | undefined = "classType";
 
     static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
         {
@@ -5062,17 +5065,17 @@ export class DetectAddressApi {
     /**
      * Detects address in uploaded file.
      * @summary Detects address in uploaded file.
-     * @param content Base64-encoded file contents
+     * @param uploadFile Your file to be uploaded
      */
-    public detectAddressPost (content: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public detectAddressPost (uploadFile: UploadFile) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/letters/detect-address';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'content' is not null or undefined
-        if (content === null || content === undefined) {
-            throw new Error('Required parameter content was null or undefined when calling detectAddressPost.');
+        // verify required parameter 'uploadFile' is not null or undefined
+        if (uploadFile === null || uploadFile === undefined) {
+            throw new Error('Required parameter uploadFile was null or undefined when calling detectAddressPost.');
         }
 
 
@@ -5085,7 +5088,7 @@ export class DetectAddressApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(content, "string")
+            body: ObjectSerializer.serialize(uploadFile, "UploadFile")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -13956,14 +13959,19 @@ export class UploadApi {
     /**
      * Upload File
      * @summary Upload File
+     * @param uploadFile Your file to be uploaded
      * @param convert 
-     * @param uploadFile 
      */
-    public uploadsPost (convert: string, uploadFile?: UploadFile) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public uploadsPost (uploadFile: UploadFile, convert: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/uploads';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
+
+        // verify required parameter 'uploadFile' is not null or undefined
+        if (uploadFile === null || uploadFile === undefined) {
+            throw new Error('Required parameter uploadFile was null or undefined when calling uploadsPost.');
+        }
 
         // verify required parameter 'convert' is not null or undefined
         if (convert === null || convert === undefined) {
