@@ -2121,7 +2121,7 @@ export class PostRecipient {
     /**
     * Second line of address
     */
-    'addressLine2': string;
+    'addressLine2'?: string;
     /**
     * City
     */
