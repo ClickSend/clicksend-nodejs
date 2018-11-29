@@ -2022,6 +2022,10 @@ export class PostLetter {
     */
     'colour'?: number;
     /**
+    * Whether letter is priority
+    */
+    'priorityPost'?: number;
+    /**
     * Source being sent from
     */
     'source'?: string;
@@ -2052,6 +2056,11 @@ export class PostLetter {
         {
             "name": "colour",
             "baseName": "colour",
+            "type": "number"
+        },
+        {
+            "name": "priorityPost",
+            "baseName": "priority_post",
             "type": "number"
         },
         {
