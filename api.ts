@@ -1889,115 +1889,6 @@ export class MmsMessageCollection {
 }
 
 /**
-* Post direct mail model
-*/
-export class PostDirectMail {
-    /**
-    * Campaign name
-    */
-    'name': string;
-    /**
-    * Campaign file URLs (maximum 2)
-    */
-    'fileUrls': Array<string>;
-    /**
-    * Document size - A5 or DL
-    */
-    'size': string;
-    /**
-    * PostDirectMailArea model
-    */
-    'areas': Array<PostDirectMailArea>;
-    /**
-    * Leave blank for immediate delivery. Your schedule time in unix format.
-    */
-    'schedule'?: number;
-    /**
-    * Your method of sending e.g. 'wordpress', 'php', 'c#'.
-    */
-    'source'?: string;
-    /**
-    * A custom string for your own reference
-    */
-    'customString'?: string;
-
-    static discriminator: string | undefined = "classType";
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "name",
-            "baseName": "name",
-            "type": "string"
-        },
-        {
-            "name": "fileUrls",
-            "baseName": "file_urls",
-            "type": "Array<string>"
-        },
-        {
-            "name": "size",
-            "baseName": "size",
-            "type": "string"
-        },
-        {
-            "name": "areas",
-            "baseName": "areas",
-            "type": "Array<PostDirectMailArea>"
-        },
-        {
-            "name": "schedule",
-            "baseName": "schedule",
-            "type": "number"
-        },
-        {
-            "name": "source",
-            "baseName": "source",
-            "type": "string"
-        },
-        {
-            "name": "customString",
-            "baseName": "custom_string",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return PostDirectMail.attributeTypeMap;
-    }
-}
-
-/**
-* PostDirectMailArea model
-*/
-export class PostDirectMailArea {
-    /**
-    * Location ID to send to
-    */
-    'locationId': number;
-    /**
-    * Number of items to send
-    */
-    'quantity': number;
-
-    static discriminator: string | undefined = "classType";
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "locationId",
-            "baseName": "location_id",
-            "type": "number"
-        },
-        {
-            "name": "quantity",
-            "baseName": "quantity",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return PostDirectMailArea.attributeTypeMap;
-    }
-}
-
-/**
 * PostLetter model
 */
 export class PostLetter {
@@ -2005,6 +1896,10 @@ export class PostLetter {
     * URL of file to send
     */
     'fileUrl': string;
+    /**
+    * Whether letter is priority
+    */
+    'priorityPost'?: number;
     /**
     * Array of PostRecipient models
     */
@@ -2022,10 +1917,6 @@ export class PostLetter {
     */
     'colour'?: number;
     /**
-    * Whether letter is priority
-    */
-    'priorityPost'?: number;
-    /**
     * Source being sent from
     */
     'source'?: string;
@@ -2037,6 +1928,11 @@ export class PostLetter {
             "name": "fileUrl",
             "baseName": "file_url",
             "type": "string"
+        },
+        {
+            "name": "priorityPost",
+            "baseName": "priority_post",
+            "type": "number"
         },
         {
             "name": "recipients",
@@ -2056,11 +1952,6 @@ export class PostLetter {
         {
             "name": "colour",
             "baseName": "colour",
-            "type": "number"
-        },
-        {
-            "name": "priorityPost",
-            "baseName": "priority_post",
             "type": "number"
         },
         {
@@ -2890,8 +2781,6 @@ let typeMap: {[index: string]: any} = {
     "MmsCampaign": MmsCampaign,
     "MmsMessage": MmsMessage,
     "MmsMessageCollection": MmsMessageCollection,
-    "PostDirectMail": PostDirectMail,
-    "PostDirectMailArea": PostDirectMailArea,
     "PostLetter": PostLetter,
     "PostPostcard": PostPostcard,
     "PostRecipient": PostRecipient,
@@ -4081,10 +3970,8 @@ export class ContactApi {
      * @summary Create new contact
      * @param contact Contact model
      * @param listId List id
-     * @param page Page number
-     * @param limit Number of records per page
      */
-    public listsContactsByListIdPost (contact: Contact, listId: number, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsContactsByListIdPost (contact: Contact, listId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}/contacts'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -4099,14 +3986,6 @@ export class ContactApi {
         // verify required parameter 'listId' is not null or undefined
         if (listId === null || listId === undefined) {
             throw new Error('Required parameter listId was null or undefined when calling listsContactsByListIdPost.');
-        }
-
-        if (page !== undefined) {
-            localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
-        }
-
-        if (limit !== undefined) {
-            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
 
@@ -4451,7 +4330,7 @@ export class ContactListApi {
      * @param listId Your list id
      * @param list List model
      */
-    public listsByListIdPut (listId: number, list: Array) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsByListIdPut (listId: number, list: List) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -4632,7 +4511,7 @@ export class ContactListApi {
      * @summary Create new contact list
      * @param list List model
      */
-    public listsPost (list: Array) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsPost (list: List) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -5412,14 +5291,24 @@ export class EmailDeliveryReceiptRulesApi {
     /**
      * Get all email delivery receipt automations
      * @summary Get all email delivery receipt automations
+     * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
      */
-    public emailDeliveryReceiptAutomationsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailDeliveryReceiptAutomationsGet (q: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/email/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
+
+        // verify required parameter 'q' is not null or undefined
+        if (q === null || q === undefined) {
+            throw new Error('Required parameter q was null or undefined when calling emailDeliveryReceiptAutomationsGet.');
+        }
+
+        if (q !== undefined) {
+            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
+        }
 
         if (page !== undefined) {
             localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
@@ -7078,14 +6967,24 @@ export class FAXDeliveryReceiptRulesApi {
     /**
      * Get all fax delivery receipt automations
      * @summary Get all fax delivery receipt automations
+     * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
      */
-    public faxDeliveryReceiptAutomationsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxDeliveryReceiptAutomationsGet (q: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/fax/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
+
+        // verify required parameter 'q' is not null or undefined
+        if (q === null || q === undefined) {
+            throw new Error('Required parameter q was null or undefined when calling faxDeliveryReceiptAutomationsGet.');
+        }
+
+        if (q !== undefined) {
+            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
+        }
 
         if (page !== undefined) {
             localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
@@ -7380,12 +7279,32 @@ export class FaxApi {
     /**
      * Get List of Fax Receipts
      * @summary Get List of Fax Receipts
+     * @param q Your keyword or query.
+     * @param page Page number
+     * @param limit Number of records per page
      */
-    public faxReceiptsGet () : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxReceiptsGet (q: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/fax/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
+
+        // verify required parameter 'q' is not null or undefined
+        if (q === null || q === undefined) {
+            throw new Error('Required parameter q was null or undefined when calling faxReceiptsGet.');
+        }
+
+        if (q !== undefined) {
+            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
+        }
+
+        if (page !== undefined) {
+            localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
+        }
+
+        if (limit !== undefined) {
+            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
+        }
 
 
         let localVarUseFormData = false;
@@ -7766,14 +7685,24 @@ export class InboundFAXRulesApi {
     /**
      * Get all inbound fax automations
      * @summary Get all inbound fax automations
+     * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
      */
-    public faxInboundAutomationsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxInboundAutomationsGet (q: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/fax/inbound';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
+
+        // verify required parameter 'q' is not null or undefined
+        if (q === null || q === undefined) {
+            throw new Error('Required parameter q was null or undefined when calling faxInboundAutomationsGet.');
+        }
+
+        if (q !== undefined) {
+            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
+        }
 
         if (page !== undefined) {
             localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
@@ -9267,305 +9196,6 @@ export class NumberApi {
 
         if (searchType !== undefined) {
             localVarQueryParameters['search_type'] = ObjectSerializer.serialize(searchType, "number");
-        }
-
-        if (page !== undefined) {
-            localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
-        }
-
-        if (limit !== undefined) {
-            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
-        }
-
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
-
-        this.authentications.default.applyToRequest(localVarRequestOptions);
-
-        if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "string");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-}
-export enum PostDirectMailApiApiKeys {
-}
-
-export class PostDirectMailApi {
-    protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = {};
-    protected _useQuerystring : boolean = false;
-
-    protected authentications = {
-        'default': <Authentication>new VoidAuth(),
-        'BasicAuth': new HttpBasicAuth(),
-    }
-
-    constructor(basePath?: string);
-    constructor(username: string, password: string, basePath?: string);
-    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
-        if (password) {
-            this.username = basePathOrUsername;
-            this.password = password
-            if (basePath) {
-                this.basePath = basePath;
-            }
-        } else {
-            if (basePathOrUsername) {
-                this.basePath = basePathOrUsername
-            }
-        }
-    }
-
-    set useQuerystring(value: boolean) {
-        this._useQuerystring = value;
-    }
-
-    set basePath(basePath: string) {
-        this._basePath = basePath;
-    }
-
-    get basePath() {
-        return this._basePath;
-    }
-
-    public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
-    }
-
-    public setApiKey(key: PostDirectMailApiApiKeys, value: string) {
-        (this.authentications as any)[PostDirectMailApiApiKeys[key]].apiKey = value;
-    }
-    set username(username: string) {
-        this.authentications.BasicAuth.username = username;
-    }
-
-    set password(password: string) {
-        this.authentications.BasicAuth.password = password;
-    }
-    /**
-     * Get direct mail campaigns
-     * @summary Get direct mail campaigns
-     * @param page Page number
-     * @param limit Number of records per page
-     */
-    public postDirectMailCampaignsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
-        const localVarPath = this.basePath + '/post/direct-mail/campaigns';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let localVarFormParams: any = {};
-
-        if (page !== undefined) {
-            localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
-        }
-
-        if (limit !== undefined) {
-            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
-        }
-
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
-
-        this.authentications.default.applyToRequest(localVarRequestOptions);
-
-        if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "string");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-    /**
-     * Calculate direct mail campaign price
-     * @summary Calculate direct mail campaign price
-     * @param postDirectMail PostDirectMail model
-     */
-    public postDirectMailCampaignsPricePost (postDirectMail: PostDirectMail) : Promise<{ response: http.IncomingMessage; body: string;  }> {
-        const localVarPath = this.basePath + '/post/direct-mail/campaigns/price';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'postDirectMail' is not null or undefined
-        if (postDirectMail === null || postDirectMail === undefined) {
-            throw new Error('Required parameter postDirectMail was null or undefined when calling postDirectMailCampaignsPricePost.');
-        }
-
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(postDirectMail, "PostDirectMail")
-        };
-
-        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
-
-        this.authentications.default.applyToRequest(localVarRequestOptions);
-
-        if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "string");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-    /**
-     * Send direct mail campaign
-     * @summary Send direct mail campaign
-     * @param postDirectMail PostDirectMail model
-     */
-    public postDirectMailCampaignsSendPost (postDirectMail: PostDirectMail) : Promise<{ response: http.IncomingMessage; body: string;  }> {
-        const localVarPath = this.basePath + '/post/direct-mail/campaigns/send';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'postDirectMail' is not null or undefined
-        if (postDirectMail === null || postDirectMail === undefined) {
-            throw new Error('Required parameter postDirectMail was null or undefined when calling postDirectMailCampaignsSendPost.');
-        }
-
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(postDirectMail, "PostDirectMail")
-        };
-
-        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
-
-        this.authentications.default.applyToRequest(localVarRequestOptions);
-
-        if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "string");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-    /**
-     * Search for a location
-     * @summary Search for a location
-     * @param country Country Code to search
-     * @param q Search term (e.g. post code, city name)
-     * @param page Page number
-     * @param limit Number of records per page
-     */
-    public postDirectMailLocationsSearchByCountryGet (country: string, q: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
-        const localVarPath = this.basePath + '/post/direct-mail/locations/search/{country}'
-            .replace('{' + 'country' + '}', encodeURIComponent(String(country)));
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'country' is not null or undefined
-        if (country === null || country === undefined) {
-            throw new Error('Required parameter country was null or undefined when calling postDirectMailLocationsSearchByCountryGet.');
-        }
-
-        // verify required parameter 'q' is not null or undefined
-        if (q === null || q === undefined) {
-            throw new Error('Required parameter q was null or undefined when calling postDirectMailLocationsSearchByCountryGet.');
-        }
-
-        if (q !== undefined) {
-            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
         }
 
         if (page !== undefined) {
@@ -11207,14 +10837,24 @@ export class SMSApi {
     /**
      * Get all inbound sms
      * @summary Get all inbound sms
+     * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
      */
-    public smsInboundGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsInboundGet (q: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/inbound';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
+
+        // verify required parameter 'q' is not null or undefined
+        if (q === null || q === undefined) {
+            throw new Error('Required parameter q was null or undefined when calling smsInboundGet.');
+        }
+
+        if (q !== undefined) {
+            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
+        }
 
         if (page !== undefined) {
             localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
@@ -11480,14 +11120,24 @@ export class SMSApi {
     /**
      * Get all delivery receipts
      * @summary Get all delivery receipts
+     * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
      */
-    public smsReceiptsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsReceiptsGet (q: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
+
+        // verify required parameter 'q' is not null or undefined
+        if (q === null || q === undefined) {
+            throw new Error('Required parameter q was null or undefined when calling smsReceiptsGet.');
+        }
+
+        if (q !== undefined) {
+            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
+        }
 
         if (page !== undefined) {
             localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
@@ -12211,14 +11861,24 @@ export class SMSDeliveryReceiptRulesApi {
     /**
      * Get all sms delivery receipt automations
      * @summary Get all sms delivery receipt automations
+     * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
      */
-    public smsDeliveryReceiptAutomationsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsDeliveryReceiptAutomationsGet (q: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/sms/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
+
+        // verify required parameter 'q' is not null or undefined
+        if (q === null || q === undefined) {
+            throw new Error('Required parameter q was null or undefined when calling smsDeliveryReceiptAutomationsGet.');
+        }
+
+        if (q !== undefined) {
+            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
+        }
 
         if (page !== undefined) {
             localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
@@ -12841,54 +12501,6 @@ export class StatisticsApi {
 
     set password(password: string) {
         this.authentications.BasicAuth.password = password;
-    }
-    /**
-     * Get mms statistics
-     * @summary Get mms statistics
-     */
-    public statisticsMmsGet () : Promise<{ response: http.IncomingMessage; body: string;  }> {
-        const localVarPath = this.basePath + '/statistics/mms';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let localVarFormParams: any = {};
-
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
-
-        this.authentications.default.applyToRequest(localVarRequestOptions);
-
-        if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "string");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
     }
     /**
      * Get sms statistics
@@ -14762,14 +14374,24 @@ export class VoiceApi {
     /**
      * Get all voice receipts
      * @summary Get all voice receipts
+     * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
      */
-    public voiceReceiptsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceReceiptsGet (q: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/voice/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
+
+        // verify required parameter 'q' is not null or undefined
+        if (q === null || q === undefined) {
+            throw new Error('Required parameter q was null or undefined when calling voiceReceiptsGet.');
+        }
+
+        if (q !== undefined) {
+            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
+        }
 
         if (page !== undefined) {
             localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
@@ -15158,14 +14780,24 @@ export class VoiceDeliveryReceiptRulesApi {
     /**
      * Get all voice delivery receipt automations
      * @summary Get all voice delivery receipt automations
+     * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
      */
-    public voiceDeliveryReceiptAutomationsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceDeliveryReceiptAutomationsGet (q: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/voice/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
+
+        // verify required parameter 'q' is not null or undefined
+        if (q === null || q === undefined) {
+            throw new Error('Required parameter q was null or undefined when calling voiceDeliveryReceiptAutomationsGet.');
+        }
+
+        if (q !== undefined) {
+            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
+        }
 
         if (page !== undefined) {
             localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
