@@ -10773,16 +10773,21 @@ export class SMSApi {
     /**
      * Get all sms history
      * @summary Get all sms history
+     * @param q Custom query Example: from:{number},status_code:201.
      * @param dateFrom Start date
      * @param dateTo End date
      * @param page Page number
      * @param limit Number of records per page
      */
-    public smsHistoryGet (dateFrom?: number, dateTo?: number, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsHistoryGet (q?: string, dateFrom?: number, dateTo?: number, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/history';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
+
+        if (q !== undefined) {
+            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
+        }
 
         if (dateFrom !== undefined) {
             localVarQueryParameters['date_from'] = ObjectSerializer.serialize(dateFrom, "number");
