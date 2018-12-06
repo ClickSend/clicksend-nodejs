@@ -696,6 +696,29 @@ export class CreditCard {
 }
 
 /**
+* All dates before specified timestam.
+*/
+export class DateBefore {
+    /**
+    * An optional timestamp - mark all as read before this timestamp. If not given, all messages will be marked as read.
+    */
+    'dateBefore'?: string;
+
+    static discriminator: string | undefined = "classType";
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "dateBefore",
+            "baseName": "date_before",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return DateBefore.attributeTypeMap;
+    }
+}
+
+/**
 * Issues with message delivery
 */
 export class DeliveryIssue {
@@ -2759,6 +2782,7 @@ let typeMap: {[index: string]: any} = {
     "Contact": Contact,
     "ContactListImport": ContactListImport,
     "CreditCard": CreditCard,
+    "DateBefore": DateBefore,
     "DeliveryIssue": DeliveryIssue,
     "DeliveryReceiptRule": DeliveryReceiptRule,
     "Email": Email,
@@ -10990,9 +11014,9 @@ export class SMSApi {
     /**
      * Mark all inbound SMS as read optionally before a certain date
      * @summary Mark inbound SMS as read
-     * @param dateBefore An optional timestamp - mark all as read before this timestamp. If not given, all messages will be marked as read.
+     * @param dateBefore DateBefore model
      */
-    public smsInboundReadPut (dateBefore?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsInboundReadPut (dateBefore?: DateBefore) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/inbound-read';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11008,7 +11032,7 @@ export class SMSApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(dateBefore, "number")
+            body: ObjectSerializer.serialize(dateBefore, "DateBefore")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -11263,9 +11287,9 @@ export class SMSApi {
     /**
      * Mark delivery receipts as read
      * @summary Mark delivery receipts as read
-     * @param dateBefore Mark all as read before this timestamp
+     * @param dateBefore DateBefore model
      */
-    public smsReceiptsReadPut (dateBefore?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsReceiptsReadPut (dateBefore?: DateBefore) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/receipts-read';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11281,7 +11305,7 @@ export class SMSApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(dateBefore, "number")
+            body: ObjectSerializer.serialize(dateBefore, "DateBefore")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
