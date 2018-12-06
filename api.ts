@@ -702,7 +702,7 @@ export class DateBefore {
     /**
     * An optional timestamp - mark all as read before this timestamp. If not given, all messages will be marked as read.
     */
-    'dateBefore'?: string;
+    'dateBefore'?: number;
 
     static discriminator: string | undefined = "classType";
 
@@ -710,7 +710,7 @@ export class DateBefore {
         {
             "name": "dateBefore",
             "baseName": "date_before",
-            "type": "string"
+            "type": "number"
         }    ];
 
     static getAttributeTypeMap() {
