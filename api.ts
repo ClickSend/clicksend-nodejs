@@ -7269,19 +7269,14 @@ export class FaxApi {
     /**
      * Get List of Fax Receipts
      * @summary Get List of Fax Receipts
-     * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
      */
-    public faxReceiptsGet (q?: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxReceiptsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/fax/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
-
-        if (q !== undefined) {
-            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
-        }
 
         if (page !== undefined) {
             localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
@@ -8016,14 +8011,19 @@ export class InboundSMSRulesApi {
     /**
      * Get all inbound sms automations
      * @summary Get all inbound sms automations
+     * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
      */
-    public smsInboundAutomationsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsInboundAutomationsGet (q?: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/sms/inbound';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
+
+        if (q !== undefined) {
+            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
+        }
 
         if (page !== undefined) {
             localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
@@ -10933,11 +10933,66 @@ export class SMSApi {
         });
     }
     /**
+     * Mark specific inbound SMS as read
+     * @summary Mark inbound SMS as read
+     * @param messageId Message ID
+     */
+    public smsInboundReadByMessageIdPut (messageId: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/sms/inbound-read/{message_id}'
+            .replace('{' + 'message_id' + '}', encodeURIComponent(String(messageId)));
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'messageId' is not null or undefined
+        if (messageId === null || messageId === undefined) {
+            throw new Error('Required parameter messageId was null or undefined when calling smsInboundReadByMessageIdPut.');
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'PUT',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
      * Mark all inbound SMS as read optionally before a certain date
      * @summary Mark inbound SMS as read
      * @param dateBefore An optional timestamp - mark all as read before this timestamp. If not given, all messages will be marked as read.
      */
-    public smsInboundReadPut (dateBefore?: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsInboundReadPut (dateBefore?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/inbound-read';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -10953,7 +11008,7 @@ export class SMSApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(dateBefore, "string")
+            body: ObjectSerializer.serialize(dateBefore, "number")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -11095,19 +11150,14 @@ export class SMSApi {
     /**
      * Get all delivery receipts
      * @summary Get all delivery receipts
-     * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
      */
-    public smsReceiptsGet (q?: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsReceiptsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
-
-        if (q !== undefined) {
-            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
-        }
 
         if (page !== undefined) {
             localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
@@ -11215,7 +11265,7 @@ export class SMSApi {
      * @summary Mark delivery receipts as read
      * @param dateBefore Mark all as read before this timestamp
      */
-    public smsReceiptsReadPut (dateBefore?: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsReceiptsReadPut (dateBefore?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/receipts-read';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11231,7 +11281,7 @@ export class SMSApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(dateBefore, "string")
+            body: ObjectSerializer.serialize(dateBefore, "number")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -14339,19 +14389,14 @@ export class VoiceApi {
     /**
      * Get all voice receipts
      * @summary Get all voice receipts
-     * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
      */
-    public voiceReceiptsGet (q?: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceReceiptsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/voice/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
-
-        if (q !== undefined) {
-            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
-        }
 
         if (page !== undefined) {
             localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
