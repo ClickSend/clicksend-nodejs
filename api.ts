@@ -3033,6 +3033,68 @@ export class AccountApi {
         });
     }
     /**
+     * Get account useage by subaccount
+     * @summary Get account useage by subaccount
+     * @param year Year to filter by (yyyy)
+     * @param month Month to filter by (mm)
+     */
+    public accountUseageBySubaccountGet (year: number, month: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/account/usage/{year}/{month}/subaccount'
+            .replace('{' + 'year' + '}', encodeURIComponent(String(year)))
+            .replace('{' + 'month' + '}', encodeURIComponent(String(month)));
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'year' is not null or undefined
+        if (year === null || year === undefined) {
+            throw new Error('Required parameter year was null or undefined when calling accountUseageBySubaccountGet.');
+        }
+
+        // verify required parameter 'month' is not null or undefined
+        if (month === null || month === undefined) {
+            throw new Error('Required parameter month was null or undefined when calling accountUseageBySubaccountGet.');
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
      * Send account activation token
      * @summary Send account activation token
      * @param accountVerify Account details
@@ -6701,6 +6763,225 @@ export class EmailToSmsApi {
         });
     }
 }
+export enum FAXApiApiKeys {
+}
+
+export class FAXApi {
+    protected _basePath = defaultBasePath;
+    protected defaultHeaders : any = {};
+    protected _useQuerystring : boolean = false;
+
+    protected authentications = {
+        'default': <Authentication>new VoidAuth(),
+        'BasicAuth': new HttpBasicAuth(),
+    }
+
+    constructor(basePath?: string);
+    constructor(username: string, password: string, basePath?: string);
+    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+        if (password) {
+            this.username = basePathOrUsername;
+            this.password = password
+            if (basePath) {
+                this.basePath = basePath;
+            }
+        } else {
+            if (basePathOrUsername) {
+                this.basePath = basePathOrUsername
+            }
+        }
+    }
+
+    set useQuerystring(value: boolean) {
+        this._useQuerystring = value;
+    }
+
+    set basePath(basePath: string) {
+        this._basePath = basePath;
+    }
+
+    get basePath() {
+        return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
+    public setApiKey(key: FAXApiApiKeys, value: string) {
+        (this.authentications as any)[FAXApiApiKeys[key]].apiKey = value;
+    }
+    set username(username: string) {
+        this.authentications.BasicAuth.username = username;
+    }
+
+    set password(password: string) {
+        this.authentications.BasicAuth.password = password;
+    }
+    /**
+     * Get all delivery receipts
+     * @summary Get all delivery receipts
+     * @param page Page number
+     * @param limit Number of records per page
+     */
+    public faxReceiptsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/fax/receipts';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        if (page !== undefined) {
+            localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
+        }
+
+        if (limit !== undefined) {
+            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * Add a delivery receipt
+     * @summary Add a delivery receipt
+     * @param url Url model
+     */
+    public faxReceiptsPost (url: Url) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/fax/receipts';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'url' is not null or undefined
+        if (url === null || url === undefined) {
+            throw new Error('Required parameter url was null or undefined when calling faxReceiptsPost.');
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(url, "Url")
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * Mark delivery receipts as read
+     * @summary Mark delivery receipts as read
+     * @param dateBefore DateBefore model
+     */
+    public faxReceiptsReadPut (dateBefore?: DateBefore) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/fax/receipts-read';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'PUT',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(dateBefore, "DateBefore")
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+}
 export enum FAXDeliveryReceiptRulesApiApiKeys {
 }
 
@@ -7250,64 +7531,6 @@ export class FaxApi {
         // verify required parameter 'messageId' is not null or undefined
         if (messageId === null || messageId === undefined) {
             throw new Error('Required parameter messageId was null or undefined when calling faxReceiptsByMessageIdGet.');
-        }
-
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
-
-        this.authentications.default.applyToRequest(localVarRequestOptions);
-
-        if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "string");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-    /**
-     * Get List of Fax Receipts
-     * @summary Get List of Fax Receipts
-     * @param page Page number
-     * @param limit Number of records per page
-     */
-    public faxReceiptsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
-        const localVarPath = this.basePath + '/fax/receipts';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let localVarFormParams: any = {};
-
-        if (page !== undefined) {
-            localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
-        }
-
-        if (limit !== undefined) {
-            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
 
@@ -8178,6 +8401,114 @@ export class MMSApi {
             useQuerystring: this._useQuerystring,
             json: true,
             body: ObjectSerializer.serialize(mmsMessages, "MmsMessageCollection")
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * Get all delivery receipts
+     * @summary Get all delivery receipts
+     * @param page Page number
+     * @param limit Number of records per page
+     */
+    public mmsReceiptsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/mms/receipts';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        if (page !== undefined) {
+            localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
+        }
+
+        if (limit !== undefined) {
+            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * Mark delivery receipts as read
+     * @summary Mark delivery receipts as read
+     * @param dateBefore DateBefore model
+     */
+    public mmsReceiptsReadPut (dateBefore?: DateBefore) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/mms/receipts-read';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'PUT',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(dateBefore, "DateBefore")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -14416,8 +14747,8 @@ export class VoiceApi {
         });
     }
     /**
-     * Get all voice receipts
-     * @summary Get all voice receipts
+     * Get all delivery receipts
+     * @summary Get all delivery receipts
      * @param page Page number
      * @param limit Number of records per page
      */
@@ -14445,6 +14776,111 @@ export class VoiceApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * Add a delivery receipt
+     * @summary Add a delivery receipt
+     * @param url Url model
+     */
+    public voiceReceiptsPost (url: Url) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/voice/receipts';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'url' is not null or undefined
+        if (url === null || url === undefined) {
+            throw new Error('Required parameter url was null or undefined when calling voiceReceiptsPost.');
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(url, "Url")
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * Mark delivery receipts as read
+     * @summary Mark delivery receipts as read
+     * @param dateBefore DateBefore model
+     */
+    public voiceReceiptsReadPut (dateBefore?: DateBefore) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/voice/receipts-read';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'PUT',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(dateBefore, "DateBefore")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
