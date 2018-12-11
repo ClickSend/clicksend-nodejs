@@ -1542,7 +1542,7 @@ export class ForgotUsername {
 /**
 * Model for Inbound FAX Rules
 */
-export class InboundFAXRule {
+export class InboundFaxRule {
     /**
     * Dedicated Number. Can be '*' to apply to all numbers.
     */
@@ -1594,7 +1594,7 @@ export class InboundFAXRule {
         }    ];
 
     static getAttributeTypeMap() {
-        return InboundFAXRule.attributeTypeMap;
+        return InboundFaxRule.attributeTypeMap;
     }
 }
 
@@ -2799,7 +2799,7 @@ let typeMap: {[index: string]: any} = {
     "FieldsFields": FieldsFields,
     "ForgotPassword": ForgotPassword,
     "ForgotUsername": ForgotUsername,
-    "InboundFAXRule": InboundFAXRule,
+    "InboundFaxRule": InboundFaxRule,
     "InboundSMSRule": InboundSMSRule,
     "List": List,
     "MmsCampaign": MmsCampaign,
@@ -6819,6 +6819,194 @@ export class FAXApi {
         this.authentications.BasicAuth.password = password;
     }
     /**
+     * Get a list of Fax History.
+     * @summary Get a list of Fax History.
+     * @param dateFrom Customize result by setting from date (timestsamp) Example: 1457572619.
+     * @param dateTo Customize result by setting to date (timestamp) Example: 1457573000.
+     * @param q Custom query Example: status:Sent,status_code:201.
+     * @param order Order result by Example: date_added:desc,list_id:desc.
+     * @param page Page number
+     * @param limit Number of records per page
+     */
+    public faxHistoryGet (dateFrom?: number, dateTo?: number, q?: string, order?: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/fax/history';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        if (dateFrom !== undefined) {
+            localVarQueryParameters['date_from'] = ObjectSerializer.serialize(dateFrom, "number");
+        }
+
+        if (dateTo !== undefined) {
+            localVarQueryParameters['date_to'] = ObjectSerializer.serialize(dateTo, "number");
+        }
+
+        if (q !== undefined) {
+            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
+        }
+
+        if (order !== undefined) {
+            localVarQueryParameters['order'] = ObjectSerializer.serialize(order, "string");
+        }
+
+        if (page !== undefined) {
+            localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
+        }
+
+        if (limit !== undefined) {
+            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * Calculate Total Price for Fax Messages sent
+     * @summary Calculate Total Price for Fax Messages sent
+     * @param faxMessage FaxMessageCollection model
+     */
+    public faxPricePost (faxMessage: FaxMessageCollection) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/fax/price';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'faxMessage' is not null or undefined
+        if (faxMessage === null || faxMessage === undefined) {
+            throw new Error('Required parameter faxMessage was null or undefined when calling faxPricePost.');
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(faxMessage, "FaxMessageCollection")
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * Get a single fax receipt based on message id.
+     * @summary Get a single fax receipt based on message id.
+     * @param messageId ID of the message receipt to retrieve
+     */
+    public faxReceiptsByMessageIdGet (messageId: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/fax/receipts/{message_id}'
+            .replace('{' + 'message_id' + '}', encodeURIComponent(String(messageId)));
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'messageId' is not null or undefined
+        if (messageId === null || messageId === undefined) {
+            throw new Error('Required parameter messageId was null or undefined when calling faxReceiptsByMessageIdGet.');
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
      * Get all delivery receipts
      * @summary Get all delivery receipts
      * @param page Page number
@@ -6953,6 +7141,61 @@ export class FAXApi {
             useQuerystring: this._useQuerystring,
             json: true,
             body: ObjectSerializer.serialize(dateBefore, "DateBefore")
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * Send a fax using supplied supported file-types.
+     * @summary Send a fax using supplied supported file-types.
+     * @param faxMessage FaxMessageCollection model
+     */
+    public faxSendPost (faxMessage: FaxMessageCollection) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/fax/send';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'faxMessage' is not null or undefined
+        if (faxMessage === null || faxMessage === undefined) {
+            throw new Error('Required parameter faxMessage was null or undefined when calling faxSendPost.');
+        }
+
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(faxMessage, "FaxMessageCollection")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -7328,305 +7571,6 @@ export class FAXDeliveryReceiptRulesApi {
         });
     }
 }
-export enum FaxApiApiKeys {
-}
-
-export class FaxApi {
-    protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = {};
-    protected _useQuerystring : boolean = false;
-
-    protected authentications = {
-        'default': <Authentication>new VoidAuth(),
-        'BasicAuth': new HttpBasicAuth(),
-    }
-
-    constructor(basePath?: string);
-    constructor(username: string, password: string, basePath?: string);
-    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
-        if (password) {
-            this.username = basePathOrUsername;
-            this.password = password
-            if (basePath) {
-                this.basePath = basePath;
-            }
-        } else {
-            if (basePathOrUsername) {
-                this.basePath = basePathOrUsername
-            }
-        }
-    }
-
-    set useQuerystring(value: boolean) {
-        this._useQuerystring = value;
-    }
-
-    set basePath(basePath: string) {
-        this._basePath = basePath;
-    }
-
-    get basePath() {
-        return this._basePath;
-    }
-
-    public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
-    }
-
-    public setApiKey(key: FaxApiApiKeys, value: string) {
-        (this.authentications as any)[FaxApiApiKeys[key]].apiKey = value;
-    }
-    set username(username: string) {
-        this.authentications.BasicAuth.username = username;
-    }
-
-    set password(password: string) {
-        this.authentications.BasicAuth.password = password;
-    }
-    /**
-     * Get a list of Fax History.
-     * @summary Get a list of Fax History.
-     * @param dateFrom Customize result by setting from date (timestsamp) Example: 1457572619.
-     * @param dateTo Customize result by setting to date (timestamp) Example: 1457573000.
-     * @param q Custom query Example: status:Sent,status_code:201.
-     * @param order Order result by Example: date_added:desc,list_id:desc.
-     * @param page Page number
-     * @param limit Number of records per page
-     */
-    public faxHistoryGet (dateFrom?: number, dateTo?: number, q?: string, order?: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
-        const localVarPath = this.basePath + '/fax/history';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let localVarFormParams: any = {};
-
-        if (dateFrom !== undefined) {
-            localVarQueryParameters['date_from'] = ObjectSerializer.serialize(dateFrom, "number");
-        }
-
-        if (dateTo !== undefined) {
-            localVarQueryParameters['date_to'] = ObjectSerializer.serialize(dateTo, "number");
-        }
-
-        if (q !== undefined) {
-            localVarQueryParameters['q'] = ObjectSerializer.serialize(q, "string");
-        }
-
-        if (order !== undefined) {
-            localVarQueryParameters['order'] = ObjectSerializer.serialize(order, "string");
-        }
-
-        if (page !== undefined) {
-            localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
-        }
-
-        if (limit !== undefined) {
-            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
-        }
-
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
-
-        this.authentications.default.applyToRequest(localVarRequestOptions);
-
-        if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "string");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-    /**
-     * Calculate Total Price for Fax Messages sent
-     * @summary Calculate Total Price for Fax Messages sent
-     * @param faxMessage FaxMessageCollection model
-     */
-    public faxPricePost (faxMessage: FaxMessageCollection) : Promise<{ response: http.IncomingMessage; body: string;  }> {
-        const localVarPath = this.basePath + '/fax/price';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'faxMessage' is not null or undefined
-        if (faxMessage === null || faxMessage === undefined) {
-            throw new Error('Required parameter faxMessage was null or undefined when calling faxPricePost.');
-        }
-
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(faxMessage, "FaxMessageCollection")
-        };
-
-        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
-
-        this.authentications.default.applyToRequest(localVarRequestOptions);
-
-        if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "string");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-    /**
-     * Get a single fax receipt based on message id.
-     * @summary Get a single fax receipt based on message id.
-     * @param messageId ID of the message receipt to retrieve
-     */
-    public faxReceiptsByMessageIdGet (messageId: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
-        const localVarPath = this.basePath + '/fax/receipts/{message_id}'
-            .replace('{' + 'message_id' + '}', encodeURIComponent(String(messageId)));
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'messageId' is not null or undefined
-        if (messageId === null || messageId === undefined) {
-            throw new Error('Required parameter messageId was null or undefined when calling faxReceiptsByMessageIdGet.');
-        }
-
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
-
-        this.authentications.default.applyToRequest(localVarRequestOptions);
-
-        if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "string");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-    /**
-     * Send a fax using supplied supported file-types.
-     * @summary Send a fax using supplied supported file-types.
-     * @param faxMessage FaxMessageCollection model
-     */
-    public faxSendPost (faxMessage: FaxMessageCollection) : Promise<{ response: http.IncomingMessage; body: string;  }> {
-        const localVarPath = this.basePath + '/fax/send';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'faxMessage' is not null or undefined
-        if (faxMessage === null || faxMessage === undefined) {
-            throw new Error('Required parameter faxMessage was null or undefined when calling faxSendPost.');
-        }
-
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(faxMessage, "FaxMessageCollection")
-        };
-
-        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
-
-        this.authentications.default.applyToRequest(localVarRequestOptions);
-
-        if (Object.keys(localVarFormParams).length) {
-            if (localVarUseFormData) {
-                (<any>localVarRequestOptions).formData = localVarFormParams;
-            } else {
-                localVarRequestOptions.form = localVarFormParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
-            localVarRequest(localVarRequestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "string");
-                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-}
 export enum InboundFAXRulesApiApiKeys {
 }
 
@@ -7797,7 +7741,7 @@ export class InboundFAXRulesApi {
      * @summary Create new inbound fax automation
      * @param inboundFaxRule Inbound fax rule model
      */
-    public faxInboundAutomationPost (inboundFaxRule: InboundFAXRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxInboundAutomationPost (inboundFaxRule: InboundFaxRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/fax/inbound';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -7818,7 +7762,7 @@ export class InboundFAXRulesApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(inboundFaxRule, "InboundFAXRule")
+            body: ObjectSerializer.serialize(inboundFaxRule, "InboundFaxRule")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -7853,7 +7797,7 @@ export class InboundFAXRulesApi {
      * @param inboundRuleId Inbound rule id
      * @param inboundFaxRule Inbound fax rule model
      */
-    public faxInboundAutomationPut (inboundRuleId: number, inboundFaxRule: InboundFAXRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxInboundAutomationPut (inboundRuleId: number, inboundFaxRule: InboundFaxRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/fax/inbound/{inbound_rule_id}'
             .replace('{' + 'inbound_rule_id' + '}', encodeURIComponent(String(inboundRuleId)));
         let localVarQueryParameters: any = {};
@@ -7880,7 +7824,7 @@ export class InboundFAXRulesApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(inboundFaxRule, "InboundFAXRule")
+            body: ObjectSerializer.serialize(inboundFaxRule, "InboundFaxRule")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
