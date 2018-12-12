@@ -596,6 +596,29 @@ export class Contact {
 }
 
 /**
+* Your contact list.
+*/
+export class ContactList {
+    /**
+    * Your list name.
+    */
+    'listName': string;
+
+    static discriminator: string | undefined = "classType";
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "listName",
+            "baseName": "list_name",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return ContactList.attributeTypeMap;
+    }
+}
+
+/**
 * Contact list import model
 */
 export class ContactListImport {
@@ -1672,29 +1695,6 @@ export class InboundSMSRule {
 
     static getAttributeTypeMap() {
         return InboundSMSRule.attributeTypeMap;
-    }
-}
-
-/**
-* Your list.
-*/
-export class List {
-    /**
-    * Your list name.
-    */
-    'listName': string;
-
-    static discriminator: string | undefined = "classType";
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "listName",
-            "baseName": "list_name",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return List.attributeTypeMap;
     }
 }
 
@@ -2780,6 +2780,7 @@ let typeMap: {[index: string]: any} = {
     "Address": Address,
     "Attachment": Attachment,
     "Contact": Contact,
+    "ContactList": ContactList,
     "ContactListImport": ContactListImport,
     "CreditCard": CreditCard,
     "DateBefore": DateBefore,
@@ -2801,7 +2802,6 @@ let typeMap: {[index: string]: any} = {
     "ForgotUsername": ForgotUsername,
     "InboundFaxRule": InboundFaxRule,
     "InboundSMSRule": InboundSMSRule,
-    "List": List,
     "MmsCampaign": MmsCampaign,
     "MmsMessage": MmsMessage,
     "MmsMessageCollection": MmsMessageCollection,
@@ -4414,9 +4414,9 @@ export class ContactListApi {
      * Update specific contact list
      * @summary Update specific contact list
      * @param listId Your list id
-     * @param list List model
+     * @param contactList Contact list model
      */
-    public listsByListIdPut (listId: number, list: List) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsByListIdPut (listId: number, contactList: ContactList) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -4428,9 +4428,9 @@ export class ContactListApi {
             throw new Error('Required parameter listId was null or undefined when calling listsByListIdPut.');
         }
 
-        // verify required parameter 'list' is not null or undefined
-        if (list === null || list === undefined) {
-            throw new Error('Required parameter list was null or undefined when calling listsByListIdPut.');
+        // verify required parameter 'contactList' is not null or undefined
+        if (contactList === null || contactList === undefined) {
+            throw new Error('Required parameter contactList was null or undefined when calling listsByListIdPut.');
         }
 
 
@@ -4443,7 +4443,7 @@ export class ContactListApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(list, "Array")
+            body: ObjectSerializer.serialize(contactList, "ContactList")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -4595,17 +4595,17 @@ export class ContactListApi {
     /**
      * Create new contact list
      * @summary Create new contact list
-     * @param list List model
+     * @param contactList Contact list model
      */
-    public listsPost (list: List) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsPost (contactList: ContactList) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'list' is not null or undefined
-        if (list === null || list === undefined) {
-            throw new Error('Required parameter list was null or undefined when calling listsPost.');
+        // verify required parameter 'contactList' is not null or undefined
+        if (contactList === null || contactList === undefined) {
+            throw new Error('Required parameter contactList was null or undefined when calling listsPost.');
         }
 
 
@@ -4618,7 +4618,7 @@ export class ContactListApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(list, "Array")
+            body: ObjectSerializer.serialize(contactList, "ContactList")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
