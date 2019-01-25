@@ -1,10 +1,15 @@
 # The official nodejs library for ClickSend v3 REST API
 
- This is the official [ClickSend](https://clicksend.com) SDK.  *You'll need to create a free account to use the API. You can register [here](https://www.clicksend.com/signup).*  You can use our API documentation along with the SDK. Our API docs can be found [here](https://developers.clicksend.com). 
+This is the official [ClickSend](https://clicksend.com) SDK. Documentation can be found [here](https://developers.clicksend.com/docs/rest/v3/?nodejs#introduction).
+
+## Requirements
+  
+- [Sign Up](https://www.clicksend.com/signup) for a free ClickSend account.
+- Copy your API key from the [API Credentials](https://dashboard.clicksend.com/#/account/subaccount) area.
 
 ## Installation
 
-### Install typescript
+### Install TypeScript
 
 You will need to install typescript to compile the code.
 
@@ -28,6 +33,10 @@ Copy the api.js file along with the node_modules directory into your project to 
 ```shell
 var api = require('./api.js');
 ```
+
+## Documentation
+
+Documentation for our SDK and REST API can be found [here](https://developers.clicksend.com/docs/rest/v3/?nodejs#introduction).
 
 ## Getting Started (sms/send example)
 
