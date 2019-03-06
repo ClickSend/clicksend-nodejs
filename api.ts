@@ -2266,6 +2266,10 @@ export class SmsCampaign {
     * Your schedule timestamp.
     */
     'schedule'?: number;
+    /**
+    * url to be shortened add http://smsg.io/xxxxx` to the body as a placeholder.
+    */
+    'urlToShorten'?: string;
 
     static discriminator: string | undefined = "classType";
 
@@ -2294,6 +2298,11 @@ export class SmsCampaign {
             "name": "schedule",
             "baseName": "schedule",
             "type": "number"
+        },
+        {
+            "name": "urlToShorten",
+            "baseName": "url_to_shorten",
+            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
@@ -2932,13 +2941,15 @@ export class AccountApi {
     /**
      * Get account details
      * @summary Get account information
+     * @param {*} [options] Override http request options.
      */
-    public accountGet () : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public accountGet (options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/account';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -2981,8 +2992,9 @@ export class AccountApi {
      * Create An Account
      * @summary Create a new account
      * @param account Account model
+     * @param {*} [options] Override http request options.
      */
-    public accountPost (account: Account) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public accountPost (account: Account, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/account';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2993,6 +3005,7 @@ export class AccountApi {
             throw new Error('Required parameter account was null or undefined when calling accountPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3037,8 +3050,9 @@ export class AccountApi {
      * @summary Get account useage by subaccount
      * @param year Year to filter by (yyyy)
      * @param month Month to filter by (mm)
+     * @param {*} [options] Override http request options.
      */
-    public accountUseageBySubaccountGet (year: number, month: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public accountUseageBySubaccountGet (year: number, month: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/account/usage/{year}/{month}/subaccount'
             .replace('{' + 'year' + '}', encodeURIComponent(String(year)))
             .replace('{' + 'month' + '}', encodeURIComponent(String(month)));
@@ -3056,6 +3070,7 @@ export class AccountApi {
             throw new Error('Required parameter month was null or undefined when calling accountUseageBySubaccountGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3098,8 +3113,9 @@ export class AccountApi {
      * Send account activation token
      * @summary Send account activation token
      * @param accountVerify Account details
+     * @param {*} [options] Override http request options.
      */
-    public accountVerifySendPut (accountVerify: AccountVerify) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public accountVerifySendPut (accountVerify: AccountVerify, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/account-verify/send';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -3110,6 +3126,7 @@ export class AccountApi {
             throw new Error('Required parameter accountVerify was null or undefined when calling accountVerifySendPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3153,8 +3170,9 @@ export class AccountApi {
      * Verify new account
      * @summary Verify new account
      * @param activationToken 
+     * @param {*} [options] Override http request options.
      */
-    public accountVerifyVerifyByActivationTokenPut (activationToken: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public accountVerifyVerifyByActivationTokenPut (activationToken: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/account-verify/verify/{activation_token}'
             .replace('{' + 'activation_token' + '}', encodeURIComponent(String(activationToken)));
         let localVarQueryParameters: any = {};
@@ -3166,6 +3184,7 @@ export class AccountApi {
             throw new Error('Required parameter activationToken was null or undefined when calling accountVerifyVerifyByActivationTokenPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3208,13 +3227,15 @@ export class AccountApi {
      * Forgot password
      * @summary Forgot password
      * @param forgotPassword 
+     * @param {*} [options] Override http request options.
      */
-    public forgotPasswordPut (forgotPassword?: ForgotPassword) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public forgotPasswordPut (forgotPassword?: ForgotPassword, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/forgot-password';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3258,8 +3279,9 @@ export class AccountApi {
      * Verify forgot password
      * @summary Verify forgot password
      * @param verifyPassword verifyPassword data
+     * @param {*} [options] Override http request options.
      */
-    public forgotPasswordVerifyPut (verifyPassword: AccountForgotPasswordVerify) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public forgotPasswordVerifyPut (verifyPassword: AccountForgotPasswordVerify, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/forgot-password/verify';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -3270,6 +3292,7 @@ export class AccountApi {
             throw new Error('Required parameter verifyPassword was null or undefined when calling forgotPasswordVerifyPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3313,13 +3336,15 @@ export class AccountApi {
      * Forgot username
      * @summary Forgot username
      * @param forgotUsername 
+     * @param {*} [options] Override http request options.
      */
-    public forgotUsernamePut (forgotUsername?: ForgotUsername) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public forgotUsernamePut (forgotUsername?: ForgotUsername, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/forgot-username';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3416,13 +3441,15 @@ export class AccountRechargeApi {
     /**
      * Get Credit Card info
      * @summary Get Credit Card info
+     * @param {*} [options] Override http request options.
      */
-    public rechargeCreditCardGet () : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public rechargeCreditCardGet (options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/recharge/credit-card';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3465,8 +3492,9 @@ export class AccountRechargeApi {
      * Update credit card info
      * @summary Update credit card info
      * @param creditCard CreditCard model
+     * @param {*} [options] Override http request options.
      */
-    public rechargeCreditCardPut (creditCard: CreditCard) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public rechargeCreditCardPut (creditCard: CreditCard, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/recharge/credit-card';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -3477,6 +3505,7 @@ export class AccountRechargeApi {
             throw new Error('Required parameter creditCard was null or undefined when calling rechargeCreditCardPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3520,8 +3549,9 @@ export class AccountRechargeApi {
      * Get list of all packages
      * @summary Get list of all packages
      * @param country Country code
+     * @param {*} [options] Override http request options.
      */
-    public rechargePackagesGet (country?: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public rechargePackagesGet (country?: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/recharge/packages';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -3531,6 +3561,7 @@ export class AccountRechargeApi {
             localVarQueryParameters['country'] = ObjectSerializer.serialize(country, "string");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3573,8 +3604,9 @@ export class AccountRechargeApi {
      * Purchase a package
      * @summary Purchase a package
      * @param packageId ID of package to purchase
+     * @param {*} [options] Override http request options.
      */
-    public rechargePurchaseByPackageIdPut (packageId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public rechargePurchaseByPackageIdPut (packageId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/recharge/purchase/{package_id}'
             .replace('{' + 'package_id' + '}', encodeURIComponent(String(packageId)));
         let localVarQueryParameters: any = {};
@@ -3586,6 +3618,7 @@ export class AccountRechargeApi {
             throw new Error('Required parameter packageId was null or undefined when calling rechargePurchaseByPackageIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3628,8 +3661,9 @@ export class AccountRechargeApi {
      * Get specific Transaction
      * @summary Get specific Transaction
      * @param transactionId ID of transaction to retrieve
+     * @param {*} [options] Override http request options.
      */
-    public rechargeTransactionsByTransactionIdGet (transactionId: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public rechargeTransactionsByTransactionIdGet (transactionId: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/recharge/transactions/{transaction_id}'
             .replace('{' + 'transaction_id' + '}', encodeURIComponent(String(transactionId)));
         let localVarQueryParameters: any = {};
@@ -3641,6 +3675,7 @@ export class AccountRechargeApi {
             throw new Error('Required parameter transactionId was null or undefined when calling rechargeTransactionsByTransactionIdGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3684,8 +3719,9 @@ export class AccountRechargeApi {
      * @summary Purchase a package
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public rechargeTransactionsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public rechargeTransactionsGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/recharge/transactions';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -3699,6 +3735,7 @@ export class AccountRechargeApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3798,8 +3835,9 @@ export class ContactApi {
      * @summary Delete a contact
      * @param listId List ID
      * @param contactId Contact ID
+     * @param {*} [options] Override http request options.
      */
-    public listsContactsByListIdAndContactIdDelete (listId: number, contactId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsContactsByListIdAndContactIdDelete (listId: number, contactId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}/contacts/{contact_id}'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)))
             .replace('{' + 'contact_id' + '}', encodeURIComponent(String(contactId)));
@@ -3817,6 +3855,7 @@ export class ContactApi {
             throw new Error('Required parameter contactId was null or undefined when calling listsContactsByListIdAndContactIdDelete.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3860,8 +3899,9 @@ export class ContactApi {
      * @summary Get a specific contact
      * @param listId Your contact list id you want to access.
      * @param contactId Your contact id you want to access.
+     * @param {*} [options] Override http request options.
      */
-    public listsContactsByListIdAndContactIdGet (listId: number, contactId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsContactsByListIdAndContactIdGet (listId: number, contactId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}/contacts/{contact_id}'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)))
             .replace('{' + 'contact_id' + '}', encodeURIComponent(String(contactId)));
@@ -3879,6 +3919,7 @@ export class ContactApi {
             throw new Error('Required parameter contactId was null or undefined when calling listsContactsByListIdAndContactIdGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3923,8 +3964,9 @@ export class ContactApi {
      * @param listId Contact list id
      * @param contactId Contact ID
      * @param contact Contact model
+     * @param {*} [options] Override http request options.
      */
-    public listsContactsByListIdAndContactIdPut (listId: number, contactId: number, contact: Contact) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsContactsByListIdAndContactIdPut (listId: number, contactId: number, contact: Contact, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}/contacts/{contact_id}'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)))
             .replace('{' + 'contact_id' + '}', encodeURIComponent(String(contactId)));
@@ -3947,6 +3989,7 @@ export class ContactApi {
             throw new Error('Required parameter contact was null or undefined when calling listsContactsByListIdAndContactIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -3992,8 +4035,9 @@ export class ContactApi {
      * @param listId Contact list ID
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public listsContactsByListIdGet (listId: number, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsContactsByListIdGet (listId: number, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}/contacts'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -4013,6 +4057,7 @@ export class ContactApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -4056,8 +4101,9 @@ export class ContactApi {
      * @summary Create new contact
      * @param contact Contact model
      * @param listId List id
+     * @param {*} [options] Override http request options.
      */
-    public listsContactsByListIdPost (contact: Contact, listId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsContactsByListIdPost (contact: Contact, listId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}/contacts'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -4074,6 +4120,7 @@ export class ContactApi {
             throw new Error('Required parameter listId was null or undefined when calling listsContactsByListIdPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -4118,8 +4165,9 @@ export class ContactApi {
      * @summary Remove all opted out contacts
      * @param listId Your list id
      * @param optOutListId Your opt out list id
+     * @param {*} [options] Override http request options.
      */
-    public listsRemoveOptedOutContactsByListIdAndOptOutListIdPut (listId: number, optOutListId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsRemoveOptedOutContactsByListIdAndOptOutListIdPut (listId: number, optOutListId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}/remove-opted-out-contacts/{opt_out_list_id}'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)))
             .replace('{' + 'opt_out_list_id' + '}', encodeURIComponent(String(optOutListId)));
@@ -4137,6 +4185,7 @@ export class ContactApi {
             throw new Error('Required parameter optOutListId was null or undefined when calling listsRemoveOptedOutContactsByListIdAndOptOutListIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -4181,8 +4230,9 @@ export class ContactApi {
      * @param fromListId List ID for list that contains contact.
      * @param contactId Contact ID
      * @param toListId List ID for list you want to transfer contact to.
+     * @param {*} [options] Override http request options.
      */
-    public listsTransferContactPut (fromListId: number, contactId: number, toListId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsTransferContactPut (fromListId: number, contactId: number, toListId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{from_list_id}/contacts/{contact_id}/transfer/{to_list_id}'
             .replace('{' + 'from_list_id' + '}', encodeURIComponent(String(fromListId)))
             .replace('{' + 'contact_id' + '}', encodeURIComponent(String(contactId)))
@@ -4206,6 +4256,7 @@ export class ContactApi {
             throw new Error('Required parameter toListId was null or undefined when calling listsTransferContactPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -4304,8 +4355,9 @@ export class ContactListApi {
      * Delete a specific contact list
      * @summary ListsByListIdDelete
      * @param listId List ID
+     * @param {*} [options] Override http request options.
      */
-    public listsByListIdDelete (listId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsByListIdDelete (listId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -4317,6 +4369,7 @@ export class ContactListApi {
             throw new Error('Required parameter listId was null or undefined when calling listsByListIdDelete.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -4359,8 +4412,9 @@ export class ContactListApi {
      * Get specific contact list
      * @summary Get specific contact list
      * @param listId List ID
+     * @param {*} [options] Override http request options.
      */
-    public listsByListIdGet (listId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsByListIdGet (listId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -4372,6 +4426,7 @@ export class ContactListApi {
             throw new Error('Required parameter listId was null or undefined when calling listsByListIdGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -4415,8 +4470,9 @@ export class ContactListApi {
      * @summary Update specific contact list
      * @param listId Your list id
      * @param contactList Contact list model
+     * @param {*} [options] Override http request options.
      */
-    public listsByListIdPut (listId: number, contactList: ContactList) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsByListIdPut (listId: number, contactList: ContactList, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -4433,6 +4489,7 @@ export class ContactListApi {
             throw new Error('Required parameter contactList was null or undefined when calling listsByListIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -4477,8 +4534,9 @@ export class ContactListApi {
      * @summary Get all contact lists
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public listsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -4492,6 +4550,7 @@ export class ContactListApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -4535,8 +4594,9 @@ export class ContactListApi {
      * @summary Import contacts to list
      * @param listId Your contact list id you want to access.
      * @param file ContactListImport model
+     * @param {*} [options] Override http request options.
      */
-    public listsImportByListIdPost (listId: number, file: ContactListImport) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsImportByListIdPost (listId: number, file: ContactListImport, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}/import'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -4553,6 +4613,7 @@ export class ContactListApi {
             throw new Error('Required parameter file was null or undefined when calling listsImportByListIdPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -4596,8 +4657,9 @@ export class ContactListApi {
      * Create new contact list
      * @summary Create new contact list
      * @param contactList Contact list model
+     * @param {*} [options] Override http request options.
      */
-    public listsPost (contactList: ContactList) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsPost (contactList: ContactList, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -4608,6 +4670,7 @@ export class ContactListApi {
             throw new Error('Required parameter contactList was null or undefined when calling listsPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -4652,8 +4715,9 @@ export class ContactListApi {
      * @summary Remove duplicate contacts
      * @param listId Your list id
      * @param fields Fields model
+     * @param {*} [options] Override http request options.
      */
-    public listsRemoveDuplicatesByListIdPut (listId: number, fields: Fields) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsRemoveDuplicatesByListIdPut (listId: number, fields: Fields, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}/remove-duplicates'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -4670,6 +4734,7 @@ export class ContactListApi {
             throw new Error('Required parameter fields was null or undefined when calling listsRemoveDuplicatesByListIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -4768,13 +4833,15 @@ export class CountriesApi {
     /**
      * Get all countries
      * @summary Get all country codes
+     * @param {*} [options] Override http request options.
      */
-    public countriesGet () : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public countriesGet (options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/countries';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -4872,8 +4939,9 @@ export class DeliveryIssuesApi {
      * @summary Get all delivery issues
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public deliveryIssuesGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public deliveryIssuesGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/delivery-issues';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -4887,6 +4955,7 @@ export class DeliveryIssuesApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -4929,8 +4998,9 @@ export class DeliveryIssuesApi {
      * Create delivery Issue
      * @summary Create delivery Issue
      * @param deliveryIssue DeliveryIssue model
+     * @param {*} [options] Override http request options.
      */
-    public deliveryIssuesPost (deliveryIssue: DeliveryIssue) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public deliveryIssuesPost (deliveryIssue: DeliveryIssue, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/delivery-issues';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -4941,6 +5011,7 @@ export class DeliveryIssuesApi {
             throw new Error('Required parameter deliveryIssue was null or undefined when calling deliveryIssuesPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5040,8 +5111,9 @@ export class DetectAddressApi {
      * Detects address in uploaded file.
      * @summary Detects address in uploaded file.
      * @param uploadFile Your file to be uploaded
+     * @param {*} [options] Override http request options.
      */
-    public detectAddressPost (uploadFile: UploadFile) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public detectAddressPost (uploadFile: UploadFile, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/letters/detect-address';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -5052,6 +5124,7 @@ export class DetectAddressApi {
             throw new Error('Required parameter uploadFile was null or undefined when calling detectAddressPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5151,8 +5224,9 @@ export class EmailDeliveryReceiptRulesApi {
      * Delete email delivery receipt automation
      * @summary Delete email delivery receipt automation
      * @param receiptRuleId Receipt rule id
+     * @param {*} [options] Override http request options.
      */
-    public emailDeliveryReceiptAutomationDelete (receiptRuleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailDeliveryReceiptAutomationDelete (receiptRuleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/email/receipts/{receipt_rule_id}'
             .replace('{' + 'receipt_rule_id' + '}', encodeURIComponent(String(receiptRuleId)));
         let localVarQueryParameters: any = {};
@@ -5164,6 +5238,7 @@ export class EmailDeliveryReceiptRulesApi {
             throw new Error('Required parameter receiptRuleId was null or undefined when calling emailDeliveryReceiptAutomationDelete.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5206,8 +5281,9 @@ export class EmailDeliveryReceiptRulesApi {
      * Get specific email delivery receipt automation
      * @summary Get specific email delivery receipt automation
      * @param receiptRuleId Receipt rule id
+     * @param {*} [options] Override http request options.
      */
-    public emailDeliveryReceiptAutomationGet (receiptRuleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailDeliveryReceiptAutomationGet (receiptRuleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/email/receipts/{receipt_rule_id}'
             .replace('{' + 'receipt_rule_id' + '}', encodeURIComponent(String(receiptRuleId)));
         let localVarQueryParameters: any = {};
@@ -5219,6 +5295,7 @@ export class EmailDeliveryReceiptRulesApi {
             throw new Error('Required parameter receiptRuleId was null or undefined when calling emailDeliveryReceiptAutomationGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5261,8 +5338,9 @@ export class EmailDeliveryReceiptRulesApi {
      * Create email delivery receipt automations
      * @summary Create email delivery receipt automations
      * @param deliveryReceiptRule Email delivery receipt rule model
+     * @param {*} [options] Override http request options.
      */
-    public emailDeliveryReceiptAutomationPost (deliveryReceiptRule: DeliveryReceiptRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailDeliveryReceiptAutomationPost (deliveryReceiptRule: DeliveryReceiptRule, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/email/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -5273,6 +5351,7 @@ export class EmailDeliveryReceiptRulesApi {
             throw new Error('Required parameter deliveryReceiptRule was null or undefined when calling emailDeliveryReceiptAutomationPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5317,8 +5396,9 @@ export class EmailDeliveryReceiptRulesApi {
      * @summary Update email delivery receipt automation
      * @param receiptRuleId Receipt rule id
      * @param deliveryReceiptRule Delivery receipt rule model
+     * @param {*} [options] Override http request options.
      */
-    public emailDeliveryReceiptAutomationPut (receiptRuleId: number, deliveryReceiptRule: DeliveryReceiptRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailDeliveryReceiptAutomationPut (receiptRuleId: number, deliveryReceiptRule: DeliveryReceiptRule, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/email/receipts/{receipt_rule_id}'
             .replace('{' + 'receipt_rule_id' + '}', encodeURIComponent(String(receiptRuleId)));
         let localVarQueryParameters: any = {};
@@ -5335,6 +5415,7 @@ export class EmailDeliveryReceiptRulesApi {
             throw new Error('Required parameter deliveryReceiptRule was null or undefined when calling emailDeliveryReceiptAutomationPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5380,8 +5461,9 @@ export class EmailDeliveryReceiptRulesApi {
      * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public emailDeliveryReceiptAutomationsGet (q?: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailDeliveryReceiptAutomationsGet (q?: string, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/email/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -5399,6 +5481,7 @@ export class EmailDeliveryReceiptRulesApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5498,8 +5581,9 @@ export class EmailMarketingApi {
      * @summary Get all email addresses
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public allowedEmailAddressGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public allowedEmailAddressGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/addresses';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -5513,6 +5597,7 @@ export class EmailMarketingApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5555,13 +5640,15 @@ export class EmailMarketingApi {
      * Create allowed Email Address
      * @summary Create allowed Email Address
      * @param emailAddress 
+     * @param {*} [options] Override http request options.
      */
-    public allowedEmailAddressPost (emailAddress?: EmailAddress) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public allowedEmailAddressPost (emailAddress?: EmailAddress, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/addresses';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5605,8 +5692,9 @@ export class EmailMarketingApi {
      * Cancel email campaign
      * @summary Cancel email campaign
      * @param emailCampaignId Allowed email campaign id
+     * @param {*} [options] Override http request options.
      */
-    public cancelEmailCampaignPut (emailCampaignId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public cancelEmailCampaignPut (emailCampaignId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email-campaigns/{email_campaign_id}/cancel'
             .replace('{' + 'email_campaign_id' + '}', encodeURIComponent(String(emailCampaignId)));
         let localVarQueryParameters: any = {};
@@ -5618,6 +5706,7 @@ export class EmailMarketingApi {
             throw new Error('Required parameter emailCampaignId was null or undefined when calling cancelEmailCampaignPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5660,8 +5749,9 @@ export class EmailMarketingApi {
      * Get specific email campaign
      * @summary Get specific email campaign
      * @param emailCampaignId Allowed email campaign id
+     * @param {*} [options] Override http request options.
      */
-    public emailCampaignGet (emailCampaignId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailCampaignGet (emailCampaignId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email-campaigns/{email_campaign_id}'
             .replace('{' + 'email_campaign_id' + '}', encodeURIComponent(String(emailCampaignId)));
         let localVarQueryParameters: any = {};
@@ -5673,6 +5763,7 @@ export class EmailMarketingApi {
             throw new Error('Required parameter emailCampaignId was null or undefined when calling emailCampaignGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5717,8 +5808,9 @@ export class EmailMarketingApi {
      * @param emailCampaignId Allowed email campaign id
      * @param dateFrom Start date
      * @param dateTo End date
+     * @param {*} [options] Override http request options.
      */
-    public emailCampaignHistoryExportGet (emailCampaignId: number, dateFrom?: number, dateTo?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailCampaignHistoryExportGet (emailCampaignId: number, dateFrom?: number, dateTo?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email-campaigns/{email_campaign_id}/history/export'
             .replace('{' + 'email_campaign_id' + '}', encodeURIComponent(String(emailCampaignId)));
         let localVarQueryParameters: any = {};
@@ -5738,6 +5830,7 @@ export class EmailMarketingApi {
             localVarQueryParameters['date_to'] = ObjectSerializer.serialize(dateTo, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5784,8 +5877,9 @@ export class EmailMarketingApi {
      * @param dateTo End date
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public emailCampaignHistoryGet (emailCampaignId: number, dateFrom?: number, dateTo?: number, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailCampaignHistoryGet (emailCampaignId: number, dateFrom?: number, dateTo?: number, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email-campaigns/{email_campaign_id}/history'
             .replace('{' + 'email_campaign_id' + '}', encodeURIComponent(String(emailCampaignId)));
         let localVarQueryParameters: any = {};
@@ -5813,6 +5907,7 @@ export class EmailMarketingApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5855,8 +5950,9 @@ export class EmailMarketingApi {
      * Send email campaign
      * @summary Send email campaign
      * @param emailCampaign Email model
+     * @param {*} [options] Override http request options.
      */
-    public emailCampaignPost (emailCampaign: EmailCampaign) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailCampaignPost (emailCampaign: EmailCampaign, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email-campaigns/send';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -5867,6 +5963,7 @@ export class EmailMarketingApi {
             throw new Error('Required parameter emailCampaign was null or undefined when calling emailCampaignPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5910,8 +6007,9 @@ export class EmailMarketingApi {
      * Calculate email campaign price
      * @summary Calculate email campaign price
      * @param emailCampaign Email model
+     * @param {*} [options] Override http request options.
      */
-    public emailCampaignPricePost (emailCampaign: EmailCampaign) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailCampaignPricePost (emailCampaign: EmailCampaign, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email-campaigns/price';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -5922,6 +6020,7 @@ export class EmailMarketingApi {
             throw new Error('Required parameter emailCampaign was null or undefined when calling emailCampaignPricePost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -5966,8 +6065,9 @@ export class EmailMarketingApi {
      * @summary Edit email campaign
      * @param emailCampaignId Allowed email campaign id
      * @param emailCampaign Email model
+     * @param {*} [options] Override http request options.
      */
-    public emailCampaignPut (emailCampaignId: number, emailCampaign: EmailCampaign) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailCampaignPut (emailCampaignId: number, emailCampaign: EmailCampaign, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email-campaigns/{email_campaign_id}'
             .replace('{' + 'email_campaign_id' + '}', encodeURIComponent(String(emailCampaignId)));
         let localVarQueryParameters: any = {};
@@ -5984,6 +6084,7 @@ export class EmailMarketingApi {
             throw new Error('Required parameter emailCampaign was null or undefined when calling emailCampaignPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6028,8 +6129,9 @@ export class EmailMarketingApi {
      * @summary Get all email campaigns
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public emailCampaignsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailCampaignsGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email-campaigns';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -6043,6 +6145,7 @@ export class EmailMarketingApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6085,8 +6188,9 @@ export class EmailMarketingApi {
      * Send verification token
      * @summary Send verification token
      * @param emailAddressId Allowed email address id
+     * @param {*} [options] Override http request options.
      */
-    public sendVerificationTokenGet (emailAddressId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public sendVerificationTokenGet (emailAddressId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/address-verify/{email_address_id}/send'
             .replace('{' + 'email_address_id' + '}', encodeURIComponent(String(emailAddressId)));
         let localVarQueryParameters: any = {};
@@ -6098,6 +6202,7 @@ export class EmailMarketingApi {
             throw new Error('Required parameter emailAddressId was null or undefined when calling sendVerificationTokenGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6140,8 +6245,9 @@ export class EmailMarketingApi {
      * Delete specific email address
      * @summary Delete specific email address
      * @param emailAddressId Allowed email address id
+     * @param {*} [options] Override http request options.
      */
-    public specificAllowedEmailAddressDelete (emailAddressId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public specificAllowedEmailAddressDelete (emailAddressId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/addresses/{email_address_id}'
             .replace('{' + 'email_address_id' + '}', encodeURIComponent(String(emailAddressId)));
         let localVarQueryParameters: any = {};
@@ -6153,6 +6259,7 @@ export class EmailMarketingApi {
             throw new Error('Required parameter emailAddressId was null or undefined when calling specificAllowedEmailAddressDelete.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6195,8 +6302,9 @@ export class EmailMarketingApi {
      * Get specific email address
      * @summary Get specific email address
      * @param emailAddressId Allowed email address id
+     * @param {*} [options] Override http request options.
      */
-    public specificAllowedEmailAddressGet (emailAddressId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public specificAllowedEmailAddressGet (emailAddressId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/addresses/{email_address_id}'
             .replace('{' + 'email_address_id' + '}', encodeURIComponent(String(emailAddressId)));
         let localVarQueryParameters: any = {};
@@ -6208,6 +6316,7 @@ export class EmailMarketingApi {
             throw new Error('Required parameter emailAddressId was null or undefined when calling specificAllowedEmailAddressGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6251,8 +6360,9 @@ export class EmailMarketingApi {
      * @summary Verify email address using verification token
      * @param emailAddressId Allowed email address id
      * @param activationToken Your activation token.
+     * @param {*} [options] Override http request options.
      */
-    public verifyAllowedEmailAddressGet (emailAddressId: number, activationToken: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public verifyAllowedEmailAddressGet (emailAddressId: number, activationToken: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/address-verify/{email_address_id}/verify/{activation_token}'
             .replace('{' + 'email_address_id' + '}', encodeURIComponent(String(emailAddressId)))
             .replace('{' + 'activation_token' + '}', encodeURIComponent(String(activationToken)));
@@ -6270,6 +6380,7 @@ export class EmailMarketingApi {
             throw new Error('Required parameter activationToken was null or undefined when calling verifyAllowedEmailAddressGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6369,8 +6480,9 @@ export class EmailToSmsApi {
      * @summary Get list of email to sms allowed addresses
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public smsEmailSmsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsEmailSmsGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/email-sms';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -6384,6 +6496,7 @@ export class EmailToSmsApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6426,8 +6539,9 @@ export class EmailToSmsApi {
      * Create email to sms allowed address
      * @summary Create email to sms allowed address
      * @param emailSmsAddress EmailSMSAddress model
+     * @param {*} [options] Override http request options.
      */
-    public smsEmailSmsPost (emailSmsAddress: EmailSMSAddress) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsEmailSmsPost (emailSmsAddress: EmailSMSAddress, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/email-sms';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -6438,6 +6552,7 @@ export class EmailToSmsApi {
             throw new Error('Required parameter emailSmsAddress was null or undefined when calling smsEmailSmsPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6481,8 +6596,9 @@ export class EmailToSmsApi {
      * Delete email to sms stripped string rule
      * @summary Delete email to sms stripped string rule
      * @param ruleId Your rule id
+     * @param {*} [options] Override http request options.
      */
-    public smsEmailSmsStrippedStringDelete (ruleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsEmailSmsStrippedStringDelete (ruleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/email-sms-stripped-strings/{rule_id}'
             .replace('{' + 'rule_id' + '}', encodeURIComponent(String(ruleId)));
         let localVarQueryParameters: any = {};
@@ -6494,6 +6610,7 @@ export class EmailToSmsApi {
             throw new Error('Required parameter ruleId was null or undefined when calling smsEmailSmsStrippedStringDelete.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6536,8 +6653,9 @@ export class EmailToSmsApi {
      * Get email to sms stripped string rule
      * @summary Get email to sms stripped string rule
      * @param ruleId Your rule id
+     * @param {*} [options] Override http request options.
      */
-    public smsEmailSmsStrippedStringGet (ruleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsEmailSmsStrippedStringGet (ruleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/email-sms-stripped-strings/{rule_id}'
             .replace('{' + 'rule_id' + '}', encodeURIComponent(String(ruleId)));
         let localVarQueryParameters: any = {};
@@ -6549,6 +6667,7 @@ export class EmailToSmsApi {
             throw new Error('Required parameter ruleId was null or undefined when calling smsEmailSmsStrippedStringGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6591,8 +6710,9 @@ export class EmailToSmsApi {
      * Create email to sms stripped string rules
      * @summary Create email to sms stripped string rule
      * @param strippedString StrippedString model
+     * @param {*} [options] Override http request options.
      */
-    public smsEmailSmsStrippedStringPost (strippedString: StrippedString) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsEmailSmsStrippedStringPost (strippedString: StrippedString, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/email-sms-stripped-strings';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -6603,6 +6723,7 @@ export class EmailToSmsApi {
             throw new Error('Required parameter strippedString was null or undefined when calling smsEmailSmsStrippedStringPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6647,8 +6768,9 @@ export class EmailToSmsApi {
      * @summary Update email to sms stripped string rule
      * @param strippedString StrippedString model
      * @param ruleId Your rule id
+     * @param {*} [options] Override http request options.
      */
-    public smsEmailSmsStrippedStringPut (strippedString: StrippedString, ruleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsEmailSmsStrippedStringPut (strippedString: StrippedString, ruleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/email-sms-stripped-strings/{rule_id}'
             .replace('{' + 'rule_id' + '}', encodeURIComponent(String(ruleId)));
         let localVarQueryParameters: any = {};
@@ -6665,6 +6787,7 @@ export class EmailToSmsApi {
             throw new Error('Required parameter ruleId was null or undefined when calling smsEmailSmsStrippedStringPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6709,8 +6832,9 @@ export class EmailToSmsApi {
      * @summary Get list of email to sms stripped string rules
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public smsEmailSmsStrippedStringsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsEmailSmsStrippedStringsGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/email-sms-stripped-strings';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -6724,6 +6848,7 @@ export class EmailToSmsApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6827,8 +6952,9 @@ export class FAXApi {
      * @param order Order result by Example: date_added:desc,list_id:desc.
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public faxHistoryGet (dateFrom?: number, dateTo?: number, q?: string, order?: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxHistoryGet (dateFrom?: number, dateTo?: number, q?: string, order?: string, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/fax/history';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -6858,6 +6984,7 @@ export class FAXApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6900,8 +7027,9 @@ export class FAXApi {
      * Calculate Total Price for Fax Messages sent
      * @summary Calculate Total Price for Fax Messages sent
      * @param faxMessage FaxMessageCollection model
+     * @param {*} [options] Override http request options.
      */
-    public faxPricePost (faxMessage: FaxMessageCollection) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxPricePost (faxMessage: FaxMessageCollection, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/fax/price';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -6912,6 +7040,7 @@ export class FAXApi {
             throw new Error('Required parameter faxMessage was null or undefined when calling faxPricePost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -6955,8 +7084,9 @@ export class FAXApi {
      * Get a single fax receipt based on message id.
      * @summary Get a single fax receipt based on message id.
      * @param messageId ID of the message receipt to retrieve
+     * @param {*} [options] Override http request options.
      */
-    public faxReceiptsByMessageIdGet (messageId: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxReceiptsByMessageIdGet (messageId: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/fax/receipts/{message_id}'
             .replace('{' + 'message_id' + '}', encodeURIComponent(String(messageId)));
         let localVarQueryParameters: any = {};
@@ -6968,6 +7098,7 @@ export class FAXApi {
             throw new Error('Required parameter messageId was null or undefined when calling faxReceiptsByMessageIdGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7011,8 +7142,9 @@ export class FAXApi {
      * @summary Get all delivery receipts
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public faxReceiptsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxReceiptsGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/fax/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -7026,6 +7158,7 @@ export class FAXApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7068,8 +7201,9 @@ export class FAXApi {
      * Add a delivery receipt
      * @summary Add a delivery receipt
      * @param url Url model
+     * @param {*} [options] Override http request options.
      */
-    public faxReceiptsPost (url: Url) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxReceiptsPost (url: Url, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/fax/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -7080,6 +7214,7 @@ export class FAXApi {
             throw new Error('Required parameter url was null or undefined when calling faxReceiptsPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7123,13 +7258,15 @@ export class FAXApi {
      * Mark delivery receipts as read
      * @summary Mark delivery receipts as read
      * @param dateBefore DateBefore model
+     * @param {*} [options] Override http request options.
      */
-    public faxReceiptsReadPut (dateBefore?: DateBefore) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxReceiptsReadPut (dateBefore?: DateBefore, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/fax/receipts-read';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7173,8 +7310,9 @@ export class FAXApi {
      * Send a fax using supplied supported file-types.
      * @summary Send a fax using supplied supported file-types.
      * @param faxMessage FaxMessageCollection model
+     * @param {*} [options] Override http request options.
      */
-    public faxSendPost (faxMessage: FaxMessageCollection) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxSendPost (faxMessage: FaxMessageCollection, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/fax/send';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -7185,6 +7323,7 @@ export class FAXApi {
             throw new Error('Required parameter faxMessage was null or undefined when calling faxSendPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7284,8 +7423,9 @@ export class FAXDeliveryReceiptRulesApi {
      * Delete fax delivery receipt automation
      * @summary Delete fax delivery receipt automation
      * @param receiptRuleId Receipt rule id
+     * @param {*} [options] Override http request options.
      */
-    public faxDeliveryReceiptAutomationDelete (receiptRuleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxDeliveryReceiptAutomationDelete (receiptRuleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/fax/receipts/{receipt_rule_id}'
             .replace('{' + 'receipt_rule_id' + '}', encodeURIComponent(String(receiptRuleId)));
         let localVarQueryParameters: any = {};
@@ -7297,6 +7437,7 @@ export class FAXDeliveryReceiptRulesApi {
             throw new Error('Required parameter receiptRuleId was null or undefined when calling faxDeliveryReceiptAutomationDelete.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7339,8 +7480,9 @@ export class FAXDeliveryReceiptRulesApi {
      * Get specific fax delivery receipt automation
      * @summary Get specific fax delivery receipt automation
      * @param receiptRuleId Receipt rule id
+     * @param {*} [options] Override http request options.
      */
-    public faxDeliveryReceiptAutomationGet (receiptRuleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxDeliveryReceiptAutomationGet (receiptRuleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/fax/receipts/{receipt_rule_id}'
             .replace('{' + 'receipt_rule_id' + '}', encodeURIComponent(String(receiptRuleId)));
         let localVarQueryParameters: any = {};
@@ -7352,6 +7494,7 @@ export class FAXDeliveryReceiptRulesApi {
             throw new Error('Required parameter receiptRuleId was null or undefined when calling faxDeliveryReceiptAutomationGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7394,8 +7537,9 @@ export class FAXDeliveryReceiptRulesApi {
      * Create fax delivery receipt automations
      * @summary Create fax delivery receipt automations
      * @param deliveryReceiptRule fax delivery receipt rule model
+     * @param {*} [options] Override http request options.
      */
-    public faxDeliveryReceiptAutomationPost (deliveryReceiptRule: DeliveryReceiptRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxDeliveryReceiptAutomationPost (deliveryReceiptRule: DeliveryReceiptRule, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/fax/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -7406,6 +7550,7 @@ export class FAXDeliveryReceiptRulesApi {
             throw new Error('Required parameter deliveryReceiptRule was null or undefined when calling faxDeliveryReceiptAutomationPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7450,8 +7595,9 @@ export class FAXDeliveryReceiptRulesApi {
      * @summary Update fax delivery receipt automation
      * @param receiptRuleId Receipt rule id
      * @param deliveryReceiptRule Delivery receipt rule model
+     * @param {*} [options] Override http request options.
      */
-    public faxDeliveryReceiptAutomationPut (receiptRuleId: number, deliveryReceiptRule: DeliveryReceiptRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxDeliveryReceiptAutomationPut (receiptRuleId: number, deliveryReceiptRule: DeliveryReceiptRule, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/fax/receipts/{receipt_rule_id}'
             .replace('{' + 'receipt_rule_id' + '}', encodeURIComponent(String(receiptRuleId)));
         let localVarQueryParameters: any = {};
@@ -7468,6 +7614,7 @@ export class FAXDeliveryReceiptRulesApi {
             throw new Error('Required parameter deliveryReceiptRule was null or undefined when calling faxDeliveryReceiptAutomationPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7513,8 +7660,9 @@ export class FAXDeliveryReceiptRulesApi {
      * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public faxDeliveryReceiptAutomationsGet (q?: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxDeliveryReceiptAutomationsGet (q?: string, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/fax/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -7532,6 +7680,7 @@ export class FAXDeliveryReceiptRulesApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7630,8 +7779,9 @@ export class InboundFAXRulesApi {
      * Delete inbound fax automation
      * @summary Delete inbound fax automation
      * @param inboundRuleId Inbound rule id
+     * @param {*} [options] Override http request options.
      */
-    public faxInboundAutomationDelete (inboundRuleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxInboundAutomationDelete (inboundRuleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/fax/inbound/{inbound_rule_id}'
             .replace('{' + 'inbound_rule_id' + '}', encodeURIComponent(String(inboundRuleId)));
         let localVarQueryParameters: any = {};
@@ -7643,6 +7793,7 @@ export class InboundFAXRulesApi {
             throw new Error('Required parameter inboundRuleId was null or undefined when calling faxInboundAutomationDelete.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7685,8 +7836,9 @@ export class InboundFAXRulesApi {
      * Get specific inbound fax automation
      * @summary Get specific inbound fax automation
      * @param inboundRuleId Inbound rule id
+     * @param {*} [options] Override http request options.
      */
-    public faxInboundAutomationGet (inboundRuleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxInboundAutomationGet (inboundRuleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/fax/inbound/{inbound_rule_id}'
             .replace('{' + 'inbound_rule_id' + '}', encodeURIComponent(String(inboundRuleId)));
         let localVarQueryParameters: any = {};
@@ -7698,6 +7850,7 @@ export class InboundFAXRulesApi {
             throw new Error('Required parameter inboundRuleId was null or undefined when calling faxInboundAutomationGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7740,8 +7893,9 @@ export class InboundFAXRulesApi {
      * Create new inbound fax automation
      * @summary Create new inbound fax automation
      * @param inboundFaxRule Inbound fax rule model
+     * @param {*} [options] Override http request options.
      */
-    public faxInboundAutomationPost (inboundFaxRule: InboundFaxRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxInboundAutomationPost (inboundFaxRule: InboundFaxRule, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/fax/inbound';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -7752,6 +7906,7 @@ export class InboundFAXRulesApi {
             throw new Error('Required parameter inboundFaxRule was null or undefined when calling faxInboundAutomationPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7796,8 +7951,9 @@ export class InboundFAXRulesApi {
      * @summary Update inbound fax automation
      * @param inboundRuleId Inbound rule id
      * @param inboundFaxRule Inbound fax rule model
+     * @param {*} [options] Override http request options.
      */
-    public faxInboundAutomationPut (inboundRuleId: number, inboundFaxRule: InboundFaxRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxInboundAutomationPut (inboundRuleId: number, inboundFaxRule: InboundFaxRule, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/fax/inbound/{inbound_rule_id}'
             .replace('{' + 'inbound_rule_id' + '}', encodeURIComponent(String(inboundRuleId)));
         let localVarQueryParameters: any = {};
@@ -7814,6 +7970,7 @@ export class InboundFAXRulesApi {
             throw new Error('Required parameter inboundFaxRule was null or undefined when calling faxInboundAutomationPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7859,8 +8016,9 @@ export class InboundFAXRulesApi {
      * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public faxInboundAutomationsGet (q?: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public faxInboundAutomationsGet (q?: string, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/fax/inbound';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -7878,6 +8036,7 @@ export class InboundFAXRulesApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -7976,8 +8135,9 @@ export class InboundSMSRulesApi {
      * Delete inbound sms automation
      * @summary Delete inbound sms automation
      * @param inboundRuleId Inbound rule id
+     * @param {*} [options] Override http request options.
      */
-    public smsInboundAutomationDelete (inboundRuleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsInboundAutomationDelete (inboundRuleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/sms/inbound/{inbound_rule_id}'
             .replace('{' + 'inbound_rule_id' + '}', encodeURIComponent(String(inboundRuleId)));
         let localVarQueryParameters: any = {};
@@ -7989,6 +8149,7 @@ export class InboundSMSRulesApi {
             throw new Error('Required parameter inboundRuleId was null or undefined when calling smsInboundAutomationDelete.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8031,8 +8192,9 @@ export class InboundSMSRulesApi {
      * Get specific inbound sms automation
      * @summary Get specific inbound sms automation
      * @param inboundRuleId Inbound rule id
+     * @param {*} [options] Override http request options.
      */
-    public smsInboundAutomationGet (inboundRuleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsInboundAutomationGet (inboundRuleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/sms/inbound/{inbound_rule_id}'
             .replace('{' + 'inbound_rule_id' + '}', encodeURIComponent(String(inboundRuleId)));
         let localVarQueryParameters: any = {};
@@ -8044,6 +8206,7 @@ export class InboundSMSRulesApi {
             throw new Error('Required parameter inboundRuleId was null or undefined when calling smsInboundAutomationGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8086,8 +8249,9 @@ export class InboundSMSRulesApi {
      * Create new inbound sms automation
      * @summary Create new inbound sms automation
      * @param inboundSmsRule Inbound sms rule model
+     * @param {*} [options] Override http request options.
      */
-    public smsInboundAutomationPost (inboundSmsRule: InboundSMSRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsInboundAutomationPost (inboundSmsRule: InboundSMSRule, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/sms/inbound';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -8098,6 +8262,7 @@ export class InboundSMSRulesApi {
             throw new Error('Required parameter inboundSmsRule was null or undefined when calling smsInboundAutomationPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8142,8 +8307,9 @@ export class InboundSMSRulesApi {
      * @summary Update inbound sms automation
      * @param inboundRuleId Inbound rule id
      * @param inboundSmsRule Inbound sms rule model
+     * @param {*} [options] Override http request options.
      */
-    public smsInboundAutomationPut (inboundRuleId: number, inboundSmsRule: InboundSMSRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsInboundAutomationPut (inboundRuleId: number, inboundSmsRule: InboundSMSRule, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/sms/inbound/{inbound_rule_id}'
             .replace('{' + 'inbound_rule_id' + '}', encodeURIComponent(String(inboundRuleId)));
         let localVarQueryParameters: any = {};
@@ -8160,6 +8326,7 @@ export class InboundSMSRulesApi {
             throw new Error('Required parameter inboundSmsRule was null or undefined when calling smsInboundAutomationPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8205,8 +8372,9 @@ export class InboundSMSRulesApi {
      * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public smsInboundAutomationsGet (q?: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsInboundAutomationsGet (q?: string, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/sms/inbound';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -8224,6 +8392,7 @@ export class InboundSMSRulesApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8322,8 +8491,9 @@ export class MMSApi {
      * Get Price for MMS sent
      * @summary Get Price for MMS sent
      * @param mmsMessages MmsMessageCollection model
+     * @param {*} [options] Override http request options.
      */
-    public mmsPricePost (mmsMessages: MmsMessageCollection) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public mmsPricePost (mmsMessages: MmsMessageCollection, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/mms/price';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -8334,6 +8504,7 @@ export class MMSApi {
             throw new Error('Required parameter mmsMessages was null or undefined when calling mmsPricePost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8378,8 +8549,9 @@ export class MMSApi {
      * @summary Get all delivery receipts
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public mmsReceiptsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public mmsReceiptsGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/mms/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -8393,6 +8565,7 @@ export class MMSApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8435,13 +8608,15 @@ export class MMSApi {
      * Mark delivery receipts as read
      * @summary Mark delivery receipts as read
      * @param dateBefore DateBefore model
+     * @param {*} [options] Override http request options.
      */
-    public mmsReceiptsReadPut (dateBefore?: DateBefore) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public mmsReceiptsReadPut (dateBefore?: DateBefore, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/mms/receipts-read';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8485,8 +8660,9 @@ export class MMSApi {
      * Send MMS
      * @summary Send MMS
      * @param mmsMessages MmsMessageCollection model
+     * @param {*} [options] Override http request options.
      */
-    public mmsSendPost (mmsMessages: MmsMessageCollection) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public mmsSendPost (mmsMessages: MmsMessageCollection, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/mms/send';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -8497,6 +8673,7 @@ export class MMSApi {
             throw new Error('Required parameter mmsMessages was null or undefined when calling mmsSendPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8597,8 +8774,9 @@ export class MasterEmailTemplatesApi {
      * @summary Get all master email template categories
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public masterEmailTemplateCategoriesGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public masterEmailTemplateCategoriesGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/master-templates-categories';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -8612,6 +8790,7 @@ export class MasterEmailTemplatesApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8654,8 +8833,9 @@ export class MasterEmailTemplatesApi {
      * Get specific master email template category
      * @summary Get specific master email template category
      * @param categoryId Email category id
+     * @param {*} [options] Override http request options.
      */
-    public masterEmailTemplateCategoryGet (categoryId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public masterEmailTemplateCategoryGet (categoryId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/master-templates-categories/{category_id}'
             .replace('{' + 'category_id' + '}', encodeURIComponent(String(categoryId)));
         let localVarQueryParameters: any = {};
@@ -8667,6 +8847,7 @@ export class MasterEmailTemplatesApi {
             throw new Error('Required parameter categoryId was null or undefined when calling masterEmailTemplateCategoryGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8709,8 +8890,9 @@ export class MasterEmailTemplatesApi {
      * Get specific master email template
      * @summary Get specific master email template
      * @param templateId Email template id
+     * @param {*} [options] Override http request options.
      */
-    public masterEmailTemplateGet (templateId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public masterEmailTemplateGet (templateId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/master-templates/{template_id}'
             .replace('{' + 'template_id' + '}', encodeURIComponent(String(templateId)));
         let localVarQueryParameters: any = {};
@@ -8722,6 +8904,7 @@ export class MasterEmailTemplatesApi {
             throw new Error('Required parameter templateId was null or undefined when calling masterEmailTemplateGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8765,8 +8948,9 @@ export class MasterEmailTemplatesApi {
      * @summary Get all master email templates
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public masterEmailTemplatesGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public masterEmailTemplatesGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/master-templates';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -8780,6 +8964,7 @@ export class MasterEmailTemplatesApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8824,8 +9009,9 @@ export class MasterEmailTemplatesApi {
      * @param categoryId Email category id
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public masterEmailTemplatesInCategoryGet (categoryId: number, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public masterEmailTemplatesInCategoryGet (categoryId: number, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/master-templates-categories/{category_id}/master-templates'
             .replace('{' + 'category_id' + '}', encodeURIComponent(String(categoryId)));
         let localVarQueryParameters: any = {};
@@ -8845,6 +9031,7 @@ export class MasterEmailTemplatesApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8943,8 +9130,9 @@ export class MmsCampaignApi {
      * Get specific mms campaign
      * @summary Get specific mms campaign
      * @param mmsCampaignId ID of MMS campaign to retrieve
+     * @param {*} [options] Override http request options.
      */
-    public mmsCampaignByMmsCampaignIdGet (mmsCampaignId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public mmsCampaignByMmsCampaignIdGet (mmsCampaignId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/mms-campaigns/{mms_campaign_id}'
             .replace('{' + 'mms_campaign_id' + '}', encodeURIComponent(String(mmsCampaignId)));
         let localVarQueryParameters: any = {};
@@ -8956,6 +9144,7 @@ export class MmsCampaignApi {
             throw new Error('Required parameter mmsCampaignId was null or undefined when calling mmsCampaignByMmsCampaignIdGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -8999,8 +9188,9 @@ export class MmsCampaignApi {
      * @summary Update mms campaign
      * @param mmsCampaignId ID of MMS campaign to update
      * @param campaign MmsCampaign model
+     * @param {*} [options] Override http request options.
      */
-    public mmsCampaignsByMmsCampaignIdPut (mmsCampaignId: number, campaign: MmsCampaign) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public mmsCampaignsByMmsCampaignIdPut (mmsCampaignId: number, campaign: MmsCampaign, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/mms-campaigns/{mms_campaign_id}'
             .replace('{' + 'mms_campaign_id' + '}', encodeURIComponent(String(mmsCampaignId)));
         let localVarQueryParameters: any = {};
@@ -9017,6 +9207,7 @@ export class MmsCampaignApi {
             throw new Error('Required parameter campaign was null or undefined when calling mmsCampaignsByMmsCampaignIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -9060,8 +9251,9 @@ export class MmsCampaignApi {
      * Cancel sms campaign
      * @summary Cancel mms campaign
      * @param mmsCampaignId ID of MMS Campaign to cancel
+     * @param {*} [options] Override http request options.
      */
-    public mmsCampaignsCancelByMmsCampaignIdPut (mmsCampaignId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public mmsCampaignsCancelByMmsCampaignIdPut (mmsCampaignId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/mms-campaigns/{mms_campaign_id}/cancel'
             .replace('{' + 'mms_campaign_id' + '}', encodeURIComponent(String(mmsCampaignId)));
         let localVarQueryParameters: any = {};
@@ -9073,6 +9265,7 @@ export class MmsCampaignApi {
             throw new Error('Required parameter mmsCampaignId was null or undefined when calling mmsCampaignsCancelByMmsCampaignIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -9116,8 +9309,9 @@ export class MmsCampaignApi {
      * @summary Get list of mms campaigns
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public mmsCampaignsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public mmsCampaignsGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/mms-campaigns';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9131,6 +9325,7 @@ export class MmsCampaignApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -9173,8 +9368,9 @@ export class MmsCampaignApi {
      * Calculate price for sms campaign
      * @summary Calculate price for mms campaign
      * @param campaign MmsCampaign model
+     * @param {*} [options] Override http request options.
      */
-    public mmsCampaignsPricePost (campaign: MmsCampaign) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public mmsCampaignsPricePost (campaign: MmsCampaign, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/mms-campaigns/price';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9185,6 +9381,7 @@ export class MmsCampaignApi {
             throw new Error('Required parameter campaign was null or undefined when calling mmsCampaignsPricePost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -9228,8 +9425,9 @@ export class MmsCampaignApi {
      * Create mms campaign
      * @summary Create mms campaign
      * @param campaign MmsCampaign model
+     * @param {*} [options] Override http request options.
      */
-    public mmsCampaignsSendPost (campaign: MmsCampaign) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public mmsCampaignsSendPost (campaign: MmsCampaign, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/mms-campaigns/send';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9240,6 +9438,7 @@ export class MmsCampaignApi {
             throw new Error('Required parameter campaign was null or undefined when calling mmsCampaignsSendPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -9339,8 +9538,9 @@ export class NumberApi {
      * Buy dedicated number
      * @summary Buy dedicated number
      * @param dedicatedNumber Phone number to purchase
+     * @param {*} [options] Override http request options.
      */
-    public numbersBuyByDedicatedNumberPost (dedicatedNumber: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public numbersBuyByDedicatedNumberPost (dedicatedNumber: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/numbers/buy/{dedicated_number}'
             .replace('{' + 'dedicated_number' + '}', encodeURIComponent(String(dedicatedNumber)));
         let localVarQueryParameters: any = {};
@@ -9352,6 +9552,7 @@ export class NumberApi {
             throw new Error('Required parameter dedicatedNumber was null or undefined when calling numbersBuyByDedicatedNumberPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -9395,8 +9596,9 @@ export class NumberApi {
      * @summary Get all availible dedicated numbers
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public numbersGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public numbersGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/numbers';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9410,6 +9612,7 @@ export class NumberApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -9456,8 +9659,9 @@ export class NumberApi {
      * @param searchType Your strategy for searching, 0 &#x3D; starts with, 1 &#x3D; anywhere, 2 &#x3D; ends with.
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public numbersSearchByCountryGet (country: string, search?: string, searchType?: number, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public numbersSearchByCountryGet (country: string, search?: string, searchType?: number, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/numbers/search/{country}'
             .replace('{' + 'country' + '}', encodeURIComponent(String(country)));
         let localVarQueryParameters: any = {};
@@ -9485,6 +9689,7 @@ export class NumberApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -9583,8 +9788,9 @@ export class PostLetterApi {
      * export post letter history
      * @summary export post letter history
      * @param filename Filename to export to
+     * @param {*} [options] Override http request options.
      */
-    public postLettersExportGet (filename: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public postLettersExportGet (filename: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/letters/history/export';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9599,6 +9805,7 @@ export class PostLetterApi {
             localVarQueryParameters['filename'] = ObjectSerializer.serialize(filename, "string");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -9642,8 +9849,9 @@ export class PostLetterApi {
      * @summary Get all post letter history
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public postLettersHistoryGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public postLettersHistoryGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/letters/history';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9657,6 +9865,7 @@ export class PostLetterApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -9699,8 +9908,9 @@ export class PostLetterApi {
      * Calculate post letter price
      * @summary Calculate post letter price
      * @param postLetter PostLetter model
+     * @param {*} [options] Override http request options.
      */
-    public postLettersPricePost (postLetter: PostLetter) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public postLettersPricePost (postLetter: PostLetter, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/letters/price';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9711,6 +9921,7 @@ export class PostLetterApi {
             throw new Error('Required parameter postLetter was null or undefined when calling postLettersPricePost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -9754,8 +9965,9 @@ export class PostLetterApi {
      * Send post letter
      * @summary Send post letter
      * @param postLetter PostLetter model
+     * @param {*} [options] Override http request options.
      */
-    public postLettersSendPost (postLetter: PostLetter) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public postLettersSendPost (postLetter: PostLetter, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/letters/send';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9766,6 +9978,7 @@ export class PostLetterApi {
             throw new Error('Required parameter postLetter was null or undefined when calling postLettersSendPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -9865,8 +10078,9 @@ export class PostPostcardApi {
      * Export postcard history to a CSV file
      * @summary Export postcard history to a CSV file
      * @param filename Filename to export to
+     * @param {*} [options] Override http request options.
      */
-    public postPostcardsHistoryExportGet (filename: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public postPostcardsHistoryExportGet (filename: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/postcards/history/export';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9881,6 +10095,7 @@ export class PostPostcardApi {
             localVarQueryParameters['filename'] = ObjectSerializer.serialize(filename, "string");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -9924,8 +10139,9 @@ export class PostPostcardApi {
      * @summary Retrieve the history of postcards sent or scheduled
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public postPostcardsHistoryGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public postPostcardsHistoryGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/postcards/history';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9939,6 +10155,7 @@ export class PostPostcardApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -9981,8 +10198,9 @@ export class PostPostcardApi {
      * Calculate price for sending one or more postcards
      * @summary Calculate price for sending one or more postcards
      * @param postPostcards PostPostcard model
+     * @param {*} [options] Override http request options.
      */
-    public postPostcardsPricePost (postPostcards: PostPostcard) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public postPostcardsPricePost (postPostcards: PostPostcard, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/postcards/price';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -9993,6 +10211,7 @@ export class PostPostcardApi {
             throw new Error('Required parameter postPostcards was null or undefined when calling postPostcardsPricePost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -10036,8 +10255,9 @@ export class PostPostcardApi {
      * Send one or more postcards
      * @summary Send one or more postcards
      * @param postPostcards PostPostcard model
+     * @param {*} [options] Override http request options.
      */
-    public postPostcardsSendPost (postPostcards: PostPostcard) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public postPostcardsSendPost (postPostcards: PostPostcard, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/postcards/send';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -10048,6 +10268,7 @@ export class PostPostcardApi {
             throw new Error('Required parameter postPostcards was null or undefined when calling postPostcardsSendPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -10147,8 +10368,9 @@ export class PostReturnAddressApi {
      * Delete specific post return address
      * @summary Delete specific post return address
      * @param returnAddressId Return address ID
+     * @param {*} [options] Override http request options.
      */
-    public postReturnAddressesByReturnAddressIdDelete (returnAddressId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public postReturnAddressesByReturnAddressIdDelete (returnAddressId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/return-addresses/{return_address_id}'
             .replace('{' + 'return_address_id' + '}', encodeURIComponent(String(returnAddressId)));
         let localVarQueryParameters: any = {};
@@ -10160,6 +10382,7 @@ export class PostReturnAddressApi {
             throw new Error('Required parameter returnAddressId was null or undefined when calling postReturnAddressesByReturnAddressIdDelete.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -10202,8 +10425,9 @@ export class PostReturnAddressApi {
      * Get specific post return address
      * @summary Get specific post return address
      * @param returnAddressId Return address ID
+     * @param {*} [options] Override http request options.
      */
-    public postReturnAddressesByReturnAddressIdGet (returnAddressId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public postReturnAddressesByReturnAddressIdGet (returnAddressId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/return-addresses/{return_address_id}'
             .replace('{' + 'return_address_id' + '}', encodeURIComponent(String(returnAddressId)));
         let localVarQueryParameters: any = {};
@@ -10215,6 +10439,7 @@ export class PostReturnAddressApi {
             throw new Error('Required parameter returnAddressId was null or undefined when calling postReturnAddressesByReturnAddressIdGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -10258,8 +10483,9 @@ export class PostReturnAddressApi {
      * @summary Update post return address
      * @param returnAddressId Return address ID
      * @param returnAddress Address model
+     * @param {*} [options] Override http request options.
      */
-    public postReturnAddressesByReturnAddressIdPut (returnAddressId: number, returnAddress: Address) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public postReturnAddressesByReturnAddressIdPut (returnAddressId: number, returnAddress: Address, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/return-addresses/{return_address_id}'
             .replace('{' + 'return_address_id' + '}', encodeURIComponent(String(returnAddressId)));
         let localVarQueryParameters: any = {};
@@ -10276,6 +10502,7 @@ export class PostReturnAddressApi {
             throw new Error('Required parameter returnAddress was null or undefined when calling postReturnAddressesByReturnAddressIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -10320,8 +10547,9 @@ export class PostReturnAddressApi {
      * @summary Get list of post return addresses
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public postReturnAddressesGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public postReturnAddressesGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/return-addresses';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -10335,6 +10563,7 @@ export class PostReturnAddressApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -10377,8 +10606,9 @@ export class PostReturnAddressApi {
      * Create post return address
      * @summary Create post return address
      * @param returnAddress Address model
+     * @param {*} [options] Override http request options.
      */
-    public postReturnAddressesPost (returnAddress: Address) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public postReturnAddressesPost (returnAddress: Address, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/return-addresses';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -10389,6 +10619,7 @@ export class PostReturnAddressApi {
             throw new Error('Required parameter returnAddress was null or undefined when calling postReturnAddressesPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -10489,8 +10720,9 @@ export class ReferralAccountApi {
      * @summary Get all referral accounts
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public referralAccountsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public referralAccountsGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/referral/accounts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -10504,6 +10736,7 @@ export class ReferralAccountApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -10602,8 +10835,9 @@ export class ResellerAccountApi {
      * Get Reseller clients Account
      * @summary Get Reseller clients Account
      * @param clientUserId User ID of client
+     * @param {*} [options] Override http request options.
      */
-    public resellerAccountsByClientUserIdGet (clientUserId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public resellerAccountsByClientUserIdGet (clientUserId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/reseller/accounts/{client_user_id}'
             .replace('{' + 'client_user_id' + '}', encodeURIComponent(String(clientUserId)));
         let localVarQueryParameters: any = {};
@@ -10615,6 +10849,7 @@ export class ResellerAccountApi {
             throw new Error('Required parameter clientUserId was null or undefined when calling resellerAccountsByClientUserIdGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -10658,8 +10893,9 @@ export class ResellerAccountApi {
      * @summary Update Reseller clients Account
      * @param clientUserId User ID of client
      * @param resellerAccount ResellerAccount model
+     * @param {*} [options] Override http request options.
      */
-    public resellerAccountsByClientUserIdPut (clientUserId: number, resellerAccount: ResellerAccount) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public resellerAccountsByClientUserIdPut (clientUserId: number, resellerAccount: ResellerAccount, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/reseller/accounts/{client_user_id}'
             .replace('{' + 'client_user_id' + '}', encodeURIComponent(String(clientUserId)));
         let localVarQueryParameters: any = {};
@@ -10676,6 +10912,7 @@ export class ResellerAccountApi {
             throw new Error('Required parameter resellerAccount was null or undefined when calling resellerAccountsByClientUserIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -10720,8 +10957,9 @@ export class ResellerAccountApi {
      * @summary Get list of reseller accounts
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public resellerAccountsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public resellerAccountsGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/reseller/accounts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -10735,6 +10973,7 @@ export class ResellerAccountApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -10777,8 +11016,9 @@ export class ResellerAccountApi {
      * Create reseller account
      * @summary Create reseller account
      * @param resellerAccount ResellerAccount model
+     * @param {*} [options] Override http request options.
      */
-    public resellerAccountsPost (resellerAccount: ResellerAccount) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public resellerAccountsPost (resellerAccount: ResellerAccount, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/reseller/accounts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -10789,6 +11029,7 @@ export class ResellerAccountApi {
             throw new Error('Required parameter resellerAccount was null or undefined when calling resellerAccountsPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -10887,13 +11128,15 @@ export class SMSApi {
     /**
      * Update all scheduled message as cancelled
      * @summary Update all scheduled message as cancelled
+     * @param {*} [options] Override http request options.
      */
-    public smsCancelAllPut () : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsCancelAllPut (options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/cancel-all';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -10936,8 +11179,9 @@ export class SMSApi {
      * Update scheduled message as cancelled
      * @summary Update scheduled message as cancelled
      * @param messageId The message ID you want to cancel
+     * @param {*} [options] Override http request options.
      */
-    public smsCancelByMessageIdPut (messageId: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsCancelByMessageIdPut (messageId: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/{message_id}/cancel'
             .replace('{' + 'message_id' + '}', encodeURIComponent(String(messageId)));
         let localVarQueryParameters: any = {};
@@ -10949,6 +11193,7 @@ export class SMSApi {
             throw new Error('Required parameter messageId was null or undefined when calling smsCancelByMessageIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -10991,8 +11236,9 @@ export class SMSApi {
      * Export all sms history
      * @summary Export all sms history
      * @param filename Filename to download history as
+     * @param {*} [options] Override http request options.
      */
-    public smsHistoryExportGet (filename: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsHistoryExportGet (filename: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/history/export';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11007,6 +11253,7 @@ export class SMSApi {
             localVarQueryParameters['filename'] = ObjectSerializer.serialize(filename, "string");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11053,8 +11300,9 @@ export class SMSApi {
      * @param dateTo End date
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public smsHistoryGet (q?: string, dateFrom?: number, dateTo?: number, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsHistoryGet (q?: string, dateFrom?: number, dateTo?: number, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/history';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11080,6 +11328,7 @@ export class SMSApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11124,8 +11373,9 @@ export class SMSApi {
      * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public smsInboundGet (q?: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsInboundGet (q?: string, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/inbound';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11143,6 +11393,7 @@ export class SMSApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11185,8 +11436,9 @@ export class SMSApi {
      * Create inbound sms
      * @summary Create inbound sms
      * @param url Url model
+     * @param {*} [options] Override http request options.
      */
-    public smsInboundPost (url: Url) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsInboundPost (url: Url, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/inbound';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11197,6 +11449,7 @@ export class SMSApi {
             throw new Error('Required parameter url was null or undefined when calling smsInboundPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11240,8 +11493,9 @@ export class SMSApi {
      * Mark specific inbound SMS as read
      * @summary Mark inbound SMS as read
      * @param messageId Message ID
+     * @param {*} [options] Override http request options.
      */
-    public smsInboundReadByMessageIdPut (messageId: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsInboundReadByMessageIdPut (messageId: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/inbound-read/{message_id}'
             .replace('{' + 'message_id' + '}', encodeURIComponent(String(messageId)));
         let localVarQueryParameters: any = {};
@@ -11253,6 +11507,7 @@ export class SMSApi {
             throw new Error('Required parameter messageId was null or undefined when calling smsInboundReadByMessageIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11295,13 +11550,15 @@ export class SMSApi {
      * Mark all inbound SMS as read optionally before a certain date
      * @summary Mark inbound SMS as read
      * @param dateBefore DateBefore model
+     * @param {*} [options] Override http request options.
      */
-    public smsInboundReadPut (dateBefore?: DateBefore) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsInboundReadPut (dateBefore?: DateBefore, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/inbound-read';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11345,8 +11602,9 @@ export class SMSApi {
      * Calculate sms price
      * @summary Calculate sms price
      * @param smsMessages SmsMessageCollection model
+     * @param {*} [options] Override http request options.
      */
-    public smsPricePost (smsMessages: SmsMessageCollection) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsPricePost (smsMessages: SmsMessageCollection, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/price';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11357,6 +11615,7 @@ export class SMSApi {
             throw new Error('Required parameter smsMessages was null or undefined when calling smsPricePost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11400,8 +11659,9 @@ export class SMSApi {
      * Get a Specific Delivery Receipt
      * @summary Get a Specific Delivery Receipt
      * @param messageId Message ID
+     * @param {*} [options] Override http request options.
      */
-    public smsReceiptsByMessageIdGet (messageId: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsReceiptsByMessageIdGet (messageId: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/receipts/{message_id}'
             .replace('{' + 'message_id' + '}', encodeURIComponent(String(messageId)));
         let localVarQueryParameters: any = {};
@@ -11413,6 +11673,7 @@ export class SMSApi {
             throw new Error('Required parameter messageId was null or undefined when calling smsReceiptsByMessageIdGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11456,8 +11717,9 @@ export class SMSApi {
      * @summary Get all delivery receipts
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public smsReceiptsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsReceiptsGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11471,6 +11733,7 @@ export class SMSApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11513,8 +11776,9 @@ export class SMSApi {
      * Add a delivery receipt
      * @summary Add a delivery receipt
      * @param url Url model
+     * @param {*} [options] Override http request options.
      */
-    public smsReceiptsPost (url: Url) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsReceiptsPost (url: Url, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11525,6 +11789,7 @@ export class SMSApi {
             throw new Error('Required parameter url was null or undefined when calling smsReceiptsPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11568,13 +11833,15 @@ export class SMSApi {
      * Mark delivery receipts as read
      * @summary Mark delivery receipts as read
      * @param dateBefore DateBefore model
+     * @param {*} [options] Override http request options.
      */
-    public smsReceiptsReadPut (dateBefore?: DateBefore) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsReceiptsReadPut (dateBefore?: DateBefore, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/receipts-read';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11618,8 +11885,9 @@ export class SMSApi {
      *  # Send one or more SMS messages  You can post up to 1000 messages with each API call. You can send to a mix of contacts and contact lists, as long as the total number of recipients is up to 1000.  The response contains status and details for each recipient.  *Refer to [Application Status Codes](https://dashboard.clicksend.com/#/signup/step1/) for the possible response message status strings.* 
      * @summary Send sms message(s)
      * @param smsMessages SmsMessageCollection model
+     * @param {*} [options] Override http request options.
      */
-    public smsSendPost (smsMessages: SmsMessageCollection) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsSendPost (smsMessages: SmsMessageCollection, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/send';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11630,6 +11898,7 @@ export class SMSApi {
             throw new Error('Required parameter smsMessages was null or undefined when calling smsSendPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11673,8 +11942,9 @@ export class SMSApi {
      * Delete sms template
      * @summary Delete sms template
      * @param templateId Template id
+     * @param {*} [options] Override http request options.
      */
-    public smsTemplatesByTemplateIdDelete (templateId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsTemplatesByTemplateIdDelete (templateId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/templates/{template_id}'
             .replace('{' + 'template_id' + '}', encodeURIComponent(String(templateId)));
         let localVarQueryParameters: any = {};
@@ -11686,6 +11956,7 @@ export class SMSApi {
             throw new Error('Required parameter templateId was null or undefined when calling smsTemplatesByTemplateIdDelete.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11729,8 +12000,9 @@ export class SMSApi {
      * @summary Update sms template
      * @param templateId Template id
      * @param smsTemplate Template item
+     * @param {*} [options] Override http request options.
      */
-    public smsTemplatesByTemplateIdPut (templateId: number, smsTemplate: SmsTemplate) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsTemplatesByTemplateIdPut (templateId: number, smsTemplate: SmsTemplate, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/templates/{template_id}'
             .replace('{' + 'template_id' + '}', encodeURIComponent(String(templateId)));
         let localVarQueryParameters: any = {};
@@ -11747,6 +12019,7 @@ export class SMSApi {
             throw new Error('Required parameter smsTemplate was null or undefined when calling smsTemplatesByTemplateIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11791,8 +12064,9 @@ export class SMSApi {
      * @summary Get lists of all sms templates
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public smsTemplatesGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsTemplatesGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/templates';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11806,6 +12080,7 @@ export class SMSApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11848,8 +12123,9 @@ export class SMSApi {
      * Create sms template
      * @summary Create sms template
      * @param smsTemplate SmsTemplate model
+     * @param {*} [options] Override http request options.
      */
-    public smsTemplatesPost (smsTemplate: SmsTemplate) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsTemplatesPost (smsTemplate: SmsTemplate, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms/templates';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -11860,6 +12136,7 @@ export class SMSApi {
             throw new Error('Required parameter smsTemplate was null or undefined when calling smsTemplatesPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -11959,8 +12236,9 @@ export class SMSDeliveryReceiptRulesApi {
      * Delete sms delivery receipt automation
      * @summary Delete sms delivery receipt automation
      * @param receiptRuleId Receipt rule id
+     * @param {*} [options] Override http request options.
      */
-    public smsDeliveryReceiptAutomationDelete (receiptRuleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsDeliveryReceiptAutomationDelete (receiptRuleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/sms/receipts/{receipt_rule_id}'
             .replace('{' + 'receipt_rule_id' + '}', encodeURIComponent(String(receiptRuleId)));
         let localVarQueryParameters: any = {};
@@ -11972,6 +12250,7 @@ export class SMSDeliveryReceiptRulesApi {
             throw new Error('Required parameter receiptRuleId was null or undefined when calling smsDeliveryReceiptAutomationDelete.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -12014,8 +12293,9 @@ export class SMSDeliveryReceiptRulesApi {
      * Get specific sms delivery receipt automation
      * @summary Get specific sms delivery receipt automation
      * @param receiptRuleId Receipt rule id
+     * @param {*} [options] Override http request options.
      */
-    public smsDeliveryReceiptAutomationGet (receiptRuleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsDeliveryReceiptAutomationGet (receiptRuleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/sms/receipts/{receipt_rule_id}'
             .replace('{' + 'receipt_rule_id' + '}', encodeURIComponent(String(receiptRuleId)));
         let localVarQueryParameters: any = {};
@@ -12027,6 +12307,7 @@ export class SMSDeliveryReceiptRulesApi {
             throw new Error('Required parameter receiptRuleId was null or undefined when calling smsDeliveryReceiptAutomationGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -12069,8 +12350,9 @@ export class SMSDeliveryReceiptRulesApi {
      * Create sms delivery receipt automations
      * @summary Create sms delivery receipt automations
      * @param deliveryReceiptRule sms delivery receipt rule model
+     * @param {*} [options] Override http request options.
      */
-    public smsDeliveryReceiptAutomationPost (deliveryReceiptRule: DeliveryReceiptRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsDeliveryReceiptAutomationPost (deliveryReceiptRule: DeliveryReceiptRule, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/sms/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -12081,6 +12363,7 @@ export class SMSDeliveryReceiptRulesApi {
             throw new Error('Required parameter deliveryReceiptRule was null or undefined when calling smsDeliveryReceiptAutomationPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -12125,8 +12408,9 @@ export class SMSDeliveryReceiptRulesApi {
      * @summary Update sms delivery receipt automation
      * @param receiptRuleId Receipt rule id
      * @param deliveryReceiptRule Delivery receipt rule model
+     * @param {*} [options] Override http request options.
      */
-    public smsDeliveryReceiptAutomationPut (receiptRuleId: number, deliveryReceiptRule: DeliveryReceiptRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsDeliveryReceiptAutomationPut (receiptRuleId: number, deliveryReceiptRule: DeliveryReceiptRule, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/sms/receipts/{receipt_rule_id}'
             .replace('{' + 'receipt_rule_id' + '}', encodeURIComponent(String(receiptRuleId)));
         let localVarQueryParameters: any = {};
@@ -12143,6 +12427,7 @@ export class SMSDeliveryReceiptRulesApi {
             throw new Error('Required parameter deliveryReceiptRule was null or undefined when calling smsDeliveryReceiptAutomationPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -12188,8 +12473,9 @@ export class SMSDeliveryReceiptRulesApi {
      * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public smsDeliveryReceiptAutomationsGet (q?: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsDeliveryReceiptAutomationsGet (q?: string, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/sms/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -12207,6 +12493,7 @@ export class SMSDeliveryReceiptRulesApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -12307,8 +12594,9 @@ export class SearchApi {
      * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public searchContactsListsGet (q: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public searchContactsListsGet (q: string, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/search/contacts-lists';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -12331,6 +12619,7 @@ export class SearchApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -12429,8 +12718,9 @@ export class SmsCampaignApi {
      * Get specific sms campaign
      * @summary Get specific sms campaign
      * @param smsCampaignId ID of SMS campaign to retrieve
+     * @param {*} [options] Override http request options.
      */
-    public smsCampaignBySmsCampaignIdGet (smsCampaignId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsCampaignBySmsCampaignIdGet (smsCampaignId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms-campaigns/{sms_campaign_id}'
             .replace('{' + 'sms_campaign_id' + '}', encodeURIComponent(String(smsCampaignId)));
         let localVarQueryParameters: any = {};
@@ -12442,6 +12732,7 @@ export class SmsCampaignApi {
             throw new Error('Required parameter smsCampaignId was null or undefined when calling smsCampaignBySmsCampaignIdGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -12485,8 +12776,9 @@ export class SmsCampaignApi {
      * @summary Update sms campaign
      * @param smsCampaignId ID of SMS campaign to update
      * @param campaign SmsCampaign model
+     * @param {*} [options] Override http request options.
      */
-    public smsCampaignsBySmsCampaignIdPut (smsCampaignId: number, campaign: SmsCampaign) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsCampaignsBySmsCampaignIdPut (smsCampaignId: number, campaign: SmsCampaign, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms-campaigns/{sms_campaign_id}'
             .replace('{' + 'sms_campaign_id' + '}', encodeURIComponent(String(smsCampaignId)));
         let localVarQueryParameters: any = {};
@@ -12503,6 +12795,7 @@ export class SmsCampaignApi {
             throw new Error('Required parameter campaign was null or undefined when calling smsCampaignsBySmsCampaignIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -12546,8 +12839,9 @@ export class SmsCampaignApi {
      * Cancel sms campaign
      * @summary Cancel sms campaign
      * @param smsCampaignId ID of SMS Campaign to cancel
+     * @param {*} [options] Override http request options.
      */
-    public smsCampaignsCancelBySmsCampaignIdPut (smsCampaignId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsCampaignsCancelBySmsCampaignIdPut (smsCampaignId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms-campaigns/{sms_campaign_id}/cancel'
             .replace('{' + 'sms_campaign_id' + '}', encodeURIComponent(String(smsCampaignId)));
         let localVarQueryParameters: any = {};
@@ -12559,6 +12853,7 @@ export class SmsCampaignApi {
             throw new Error('Required parameter smsCampaignId was null or undefined when calling smsCampaignsCancelBySmsCampaignIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -12602,8 +12897,9 @@ export class SmsCampaignApi {
      * @summary Get list of sms campaigns
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public smsCampaignsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsCampaignsGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms-campaigns';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -12617,6 +12913,7 @@ export class SmsCampaignApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -12659,8 +12956,9 @@ export class SmsCampaignApi {
      * Calculate price for sms campaign
      * @summary Calculate price for sms campaign
      * @param campaign SmsCampaign model
+     * @param {*} [options] Override http request options.
      */
-    public smsCampaignsPricePost (campaign: SmsCampaign) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsCampaignsPricePost (campaign: SmsCampaign, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms-campaigns/price';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -12671,6 +12969,7 @@ export class SmsCampaignApi {
             throw new Error('Required parameter campaign was null or undefined when calling smsCampaignsPricePost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -12714,8 +13013,9 @@ export class SmsCampaignApi {
      * Create sms campaign
      * @summary Create sms campaign
      * @param campaign SmsCampaign model
+     * @param {*} [options] Override http request options.
      */
-    public smsCampaignsSendPost (campaign: SmsCampaign) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public smsCampaignsSendPost (campaign: SmsCampaign, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/sms-campaigns/send';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -12726,6 +13026,7 @@ export class SmsCampaignApi {
             throw new Error('Required parameter campaign was null or undefined when calling smsCampaignsSendPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -12824,13 +13125,15 @@ export class StatisticsApi {
     /**
      * Get sms statistics
      * @summary Get sms statistics
+     * @param {*} [options] Override http request options.
      */
-    public statisticsSmsGet () : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public statisticsSmsGet (options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/statistics/sms';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -12872,13 +13175,15 @@ export class StatisticsApi {
     /**
      * Get voice statistics
      * @summary Get voice statistics
+     * @param {*} [options] Override http request options.
      */
-    public statisticsVoiceGet () : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public statisticsVoiceGet (options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/statistics/voice';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -12977,8 +13282,9 @@ export class SubaccountApi {
      * Delete a subaccount
      * @summary Delete a subaccount
      * @param subaccountId ID of subaccount to delete
+     * @param {*} [options] Override http request options.
      */
-    public subaccountsBySubaccountIdDelete (subaccountId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public subaccountsBySubaccountIdDelete (subaccountId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/subaccounts/{subaccount_id}'
             .replace('{' + 'subaccount_id' + '}', encodeURIComponent(String(subaccountId)));
         let localVarQueryParameters: any = {};
@@ -12990,6 +13296,7 @@ export class SubaccountApi {
             throw new Error('Required parameter subaccountId was null or undefined when calling subaccountsBySubaccountIdDelete.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -13032,8 +13339,9 @@ export class SubaccountApi {
      * Get specific subaccount
      * @summary Get specific subaccount
      * @param subaccountId ID of subaccount to get
+     * @param {*} [options] Override http request options.
      */
-    public subaccountsBySubaccountIdGet (subaccountId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public subaccountsBySubaccountIdGet (subaccountId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/subaccounts/{subaccount_id}'
             .replace('{' + 'subaccount_id' + '}', encodeURIComponent(String(subaccountId)));
         let localVarQueryParameters: any = {};
@@ -13045,6 +13353,7 @@ export class SubaccountApi {
             throw new Error('Required parameter subaccountId was null or undefined when calling subaccountsBySubaccountIdGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -13088,8 +13397,9 @@ export class SubaccountApi {
      * @summary Update subaccount
      * @param subaccountId ID of subaccount to update
      * @param subaccount Subaccount model
+     * @param {*} [options] Override http request options.
      */
-    public subaccountsBySubaccountIdPut (subaccountId: number, subaccount: Subaccount) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public subaccountsBySubaccountIdPut (subaccountId: number, subaccount: Subaccount, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/subaccounts/{subaccount_id}'
             .replace('{' + 'subaccount_id' + '}', encodeURIComponent(String(subaccountId)));
         let localVarQueryParameters: any = {};
@@ -13106,6 +13416,7 @@ export class SubaccountApi {
             throw new Error('Required parameter subaccount was null or undefined when calling subaccountsBySubaccountIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -13150,8 +13461,9 @@ export class SubaccountApi {
      * @summary Get all subaccounts
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public subaccountsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public subaccountsGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/subaccounts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13165,6 +13477,7 @@ export class SubaccountApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -13207,8 +13520,9 @@ export class SubaccountApi {
      * Create new subaccount
      * @summary Create new subaccount
      * @param subaccount Subaccount model
+     * @param {*} [options] Override http request options.
      */
-    public subaccountsPost (subaccount: Subaccount) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public subaccountsPost (subaccount: Subaccount, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/subaccounts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13219,6 +13533,7 @@ export class SubaccountApi {
             throw new Error('Required parameter subaccount was null or undefined when calling subaccountsPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -13262,8 +13577,9 @@ export class SubaccountApi {
      * Regenerate an API Key
      * @summary Regenerate an API Key
      * @param subaccountId ID of subaccount to regenerate API key for
+     * @param {*} [options] Override http request options.
      */
-    public subaccountsRegenApiKeyBySubaccountIdPut (subaccountId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public subaccountsRegenApiKeyBySubaccountIdPut (subaccountId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/subaccounts/{subaccount_id}/regen-api-key'
             .replace('{' + 'subaccount_id' + '}', encodeURIComponent(String(subaccountId)));
         let localVarQueryParameters: any = {};
@@ -13275,6 +13591,7 @@ export class SubaccountApi {
             throw new Error('Required parameter subaccountId was null or undefined when calling subaccountsRegenApiKeyBySubaccountIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -13374,8 +13691,9 @@ export class TimezonesApi {
      * @summary Get supported list of timezones.
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public timezonesGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public timezonesGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/timezones';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13389,6 +13707,7 @@ export class TimezonesApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -13489,8 +13808,9 @@ export class TransactionalEmailApi {
      * @param filename Filename to download history as
      * @param dateFrom Start date
      * @param dateTo End date
+     * @param {*} [options] Override http request options.
      */
-    public emailHistoryExportGet (filename: string, dateFrom?: number, dateTo?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailHistoryExportGet (filename: string, dateFrom?: number, dateTo?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/history/export';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13513,6 +13833,7 @@ export class TransactionalEmailApi {
             localVarQueryParameters['date_to'] = ObjectSerializer.serialize(dateTo, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -13558,8 +13879,9 @@ export class TransactionalEmailApi {
      * @param dateTo End date
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public emailHistoryGet (dateFrom?: number, dateTo?: number, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailHistoryGet (dateFrom?: number, dateTo?: number, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/history';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13581,6 +13903,7 @@ export class TransactionalEmailApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -13623,8 +13946,9 @@ export class TransactionalEmailApi {
      * Get transactional email price
      * @summary Get transactional email price
      * @param email Email model
+     * @param {*} [options] Override http request options.
      */
-    public emailPricePost (email: Email) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailPricePost (email: Email, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/price';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13635,6 +13959,7 @@ export class TransactionalEmailApi {
             throw new Error('Required parameter email was null or undefined when calling emailPricePost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -13678,8 +14003,9 @@ export class TransactionalEmailApi {
      * Send transactional email
      * @summary Send transactional email
      * @param email Email model
+     * @param {*} [options] Override http request options.
      */
-    public emailSendPost (email: Email) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailSendPost (email: Email, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/send';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13690,6 +14016,7 @@ export class TransactionalEmailApi {
             throw new Error('Required parameter email was null or undefined when calling emailSendPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -13789,8 +14116,9 @@ export class TransferCreditApi {
      * Transfer Credit
      * @summary Transfer Credit
      * @param resellerAccountTransferCredit ResellerAccountTransferCredit model
+     * @param {*} [options] Override http request options.
      */
-    public resellerTransferCreditPut (resellerAccountTransferCredit: ResellerAccountTransferCredit) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public resellerTransferCreditPut (resellerAccountTransferCredit: ResellerAccountTransferCredit, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/reseller/transfer-credit';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13801,6 +14129,7 @@ export class TransferCreditApi {
             throw new Error('Required parameter resellerAccountTransferCredit was null or undefined when calling resellerTransferCreditPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -13901,8 +14230,9 @@ export class UploadApi {
      * @summary Upload File
      * @param uploadFile Your file to be uploaded
      * @param convert 
+     * @param {*} [options] Override http request options.
      */
-    public uploadsPost (uploadFile: UploadFile, convert: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public uploadsPost (uploadFile: UploadFile, convert: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/uploads';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -13922,6 +14252,7 @@ export class UploadApi {
             localVarQueryParameters['convert'] = ObjectSerializer.serialize(convert, "string");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14021,8 +14352,9 @@ export class UserEmailTemplatesApi {
      * Delete user email template
      * @summary Delete user email template
      * @param templateId Email template id
+     * @param {*} [options] Override http request options.
      */
-    public emailTemplateDelete (templateId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailTemplateDelete (templateId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/templates/{template_id}'
             .replace('{' + 'template_id' + '}', encodeURIComponent(String(templateId)));
         let localVarQueryParameters: any = {};
@@ -14034,6 +14366,7 @@ export class UserEmailTemplatesApi {
             throw new Error('Required parameter templateId was null or undefined when calling emailTemplateDelete.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14076,8 +14409,9 @@ export class UserEmailTemplatesApi {
      * Get specific user email templates
      * @summary Get specific user email template
      * @param templateId Email template id
+     * @param {*} [options] Override http request options.
      */
-    public emailTemplateGet (templateId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailTemplateGet (templateId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/templates/{template_id}'
             .replace('{' + 'template_id' + '}', encodeURIComponent(String(templateId)));
         let localVarQueryParameters: any = {};
@@ -14089,6 +14423,7 @@ export class UserEmailTemplatesApi {
             throw new Error('Required parameter templateId was null or undefined when calling emailTemplateGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14131,8 +14466,9 @@ export class UserEmailTemplatesApi {
      * Create email template
      * @summary Create email template
      * @param emailTemplate Email template model
+     * @param {*} [options] Override http request options.
      */
-    public emailTemplatePost (emailTemplate: EmailTemplateNew) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailTemplatePost (emailTemplate: EmailTemplateNew, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/templates';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14143,6 +14479,7 @@ export class UserEmailTemplatesApi {
             throw new Error('Required parameter emailTemplate was null or undefined when calling emailTemplatePost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14187,8 +14524,9 @@ export class UserEmailTemplatesApi {
      * @summary Update email template
      * @param templateId Email template id
      * @param emailTemplate Email template model
+     * @param {*} [options] Override http request options.
      */
-    public emailTemplatePut (templateId: number, emailTemplate: EmailTemplateUpdate) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailTemplatePut (templateId: number, emailTemplate: EmailTemplateUpdate, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/templates/{template_id}'
             .replace('{' + 'template_id' + '}', encodeURIComponent(String(templateId)));
         let localVarQueryParameters: any = {};
@@ -14205,6 +14543,7 @@ export class UserEmailTemplatesApi {
             throw new Error('Required parameter emailTemplate was null or undefined when calling emailTemplatePut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14249,8 +14588,9 @@ export class UserEmailTemplatesApi {
      * @summary Get all user email templates
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public emailTemplatesGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public emailTemplatesGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/email/templates';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14264,6 +14604,7 @@ export class UserEmailTemplatesApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14361,13 +14702,15 @@ export class VoiceApi {
     /**
      * Update all voice messages as cancelled
      * @summary Update all voice messages as cancelled
+     * @param {*} [options] Override http request options.
      */
-    public voiceCancelAllPut () : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceCancelAllPut (options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/voice/cancel-all';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14410,8 +14753,9 @@ export class VoiceApi {
      * Update voice message status as cancelled
      * @summary Update voice message status as cancelled
      * @param messageId Your voice message id
+     * @param {*} [options] Override http request options.
      */
-    public voiceCancelByMessageIdPut (messageId: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceCancelByMessageIdPut (messageId: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/voice/{message_id}/cancel'
             .replace('{' + 'message_id' + '}', encodeURIComponent(String(messageId)));
         let localVarQueryParameters: any = {};
@@ -14423,6 +14767,7 @@ export class VoiceApi {
             throw new Error('Required parameter messageId was null or undefined when calling voiceCancelByMessageIdPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14465,8 +14810,9 @@ export class VoiceApi {
      * Export voice history
      * @summary Export voice history
      * @param filename Filename to export to
+     * @param {*} [options] Override http request options.
      */
-    public voiceHistoryExportGet (filename: string) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceHistoryExportGet (filename: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/voice/history/export';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14481,6 +14827,7 @@ export class VoiceApi {
             localVarQueryParameters['filename'] = ObjectSerializer.serialize(filename, "string");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14526,8 +14873,9 @@ export class VoiceApi {
      * @param dateTo Timestamp (to) used to show records by date
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public voiceHistoryGet (dateFrom?: number, dateTo?: number, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceHistoryGet (dateFrom?: number, dateTo?: number, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/voice/history';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14549,6 +14897,7 @@ export class VoiceApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14590,13 +14939,15 @@ export class VoiceApi {
     /**
      * Get all voice languages
      * @summary Get all voice languages
+     * @param {*} [options] Override http request options.
      */
-    public voiceLangGet () : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceLangGet (options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/voice/lang';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14639,8 +14990,9 @@ export class VoiceApi {
      * Calculate voice price
      * @summary Calculate voice price
      * @param voiceMessages VoiceMessageCollection model
+     * @param {*} [options] Override http request options.
      */
-    public voicePricePost (voiceMessages: VoiceMessageCollection) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voicePricePost (voiceMessages: VoiceMessageCollection, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/voice/price';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14651,6 +15003,7 @@ export class VoiceApi {
             throw new Error('Required parameter voiceMessages was null or undefined when calling voicePricePost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14695,8 +15048,9 @@ export class VoiceApi {
      * @summary Get all delivery receipts
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public voiceReceiptsGet (page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceReceiptsGet (page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/voice/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14710,6 +15064,7 @@ export class VoiceApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14752,8 +15107,9 @@ export class VoiceApi {
      * Add a delivery receipt
      * @summary Add a delivery receipt
      * @param url Url model
+     * @param {*} [options] Override http request options.
      */
-    public voiceReceiptsPost (url: Url) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceReceiptsPost (url: Url, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/voice/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14764,6 +15120,7 @@ export class VoiceApi {
             throw new Error('Required parameter url was null or undefined when calling voiceReceiptsPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14807,13 +15164,15 @@ export class VoiceApi {
      * Mark delivery receipts as read
      * @summary Mark delivery receipts as read
      * @param dateBefore DateBefore model
+     * @param {*} [options] Override http request options.
      */
-    public voiceReceiptsReadPut (dateBefore?: DateBefore) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceReceiptsReadPut (dateBefore?: DateBefore, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/voice/receipts-read';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14857,8 +15216,9 @@ export class VoiceApi {
      * Send a voice call
      * @summary Send voice message(s)
      * @param voiceMessages VoiceMessageCollection model
+     * @param {*} [options] Override http request options.
      */
-    public voiceSendPost (voiceMessages: VoiceMessageCollection) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceSendPost (voiceMessages: VoiceMessageCollection, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/voice/send';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -14869,6 +15229,7 @@ export class VoiceApi {
             throw new Error('Required parameter voiceMessages was null or undefined when calling voiceSendPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -14968,8 +15329,9 @@ export class VoiceDeliveryReceiptRulesApi {
      * Delete voice delivery receipt automation
      * @summary Delete voice delivery receipt automation
      * @param receiptRuleId Receipt rule id
+     * @param {*} [options] Override http request options.
      */
-    public voiceDeliveryReceiptAutomationDelete (receiptRuleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceDeliveryReceiptAutomationDelete (receiptRuleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/voice/receipts/{receipt_rule_id}'
             .replace('{' + 'receipt_rule_id' + '}', encodeURIComponent(String(receiptRuleId)));
         let localVarQueryParameters: any = {};
@@ -14981,6 +15343,7 @@ export class VoiceDeliveryReceiptRulesApi {
             throw new Error('Required parameter receiptRuleId was null or undefined when calling voiceDeliveryReceiptAutomationDelete.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -15023,8 +15386,9 @@ export class VoiceDeliveryReceiptRulesApi {
      * Get specific voice delivery receipt automation
      * @summary Get specific voice delivery receipt automation
      * @param receiptRuleId Receipt rule id
+     * @param {*} [options] Override http request options.
      */
-    public voiceDeliveryReceiptAutomationGet (receiptRuleId: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceDeliveryReceiptAutomationGet (receiptRuleId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/voice/receipts/{receipt_rule_id}'
             .replace('{' + 'receipt_rule_id' + '}', encodeURIComponent(String(receiptRuleId)));
         let localVarQueryParameters: any = {};
@@ -15036,6 +15400,7 @@ export class VoiceDeliveryReceiptRulesApi {
             throw new Error('Required parameter receiptRuleId was null or undefined when calling voiceDeliveryReceiptAutomationGet.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -15078,8 +15443,9 @@ export class VoiceDeliveryReceiptRulesApi {
      * Create voice delivery receipt automations
      * @summary Create voice delivery receipt automations
      * @param deliveryReceiptRule voice delivery receipt rule model
+     * @param {*} [options] Override http request options.
      */
-    public voiceDeliveryReceiptAutomationPost (deliveryReceiptRule: DeliveryReceiptRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceDeliveryReceiptAutomationPost (deliveryReceiptRule: DeliveryReceiptRule, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/voice/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15090,6 +15456,7 @@ export class VoiceDeliveryReceiptRulesApi {
             throw new Error('Required parameter deliveryReceiptRule was null or undefined when calling voiceDeliveryReceiptAutomationPost.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -15134,8 +15501,9 @@ export class VoiceDeliveryReceiptRulesApi {
      * @summary Update voice delivery receipt automation
      * @param receiptRuleId Receipt rule id
      * @param deliveryReceiptRule Delivery receipt rule model
+     * @param {*} [options] Override http request options.
      */
-    public voiceDeliveryReceiptAutomationPut (receiptRuleId: number, deliveryReceiptRule: DeliveryReceiptRule) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceDeliveryReceiptAutomationPut (receiptRuleId: number, deliveryReceiptRule: DeliveryReceiptRule, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/voice/receipts/{receipt_rule_id}'
             .replace('{' + 'receipt_rule_id' + '}', encodeURIComponent(String(receiptRuleId)));
         let localVarQueryParameters: any = {};
@@ -15152,6 +15520,7 @@ export class VoiceDeliveryReceiptRulesApi {
             throw new Error('Required parameter deliveryReceiptRule was null or undefined when calling voiceDeliveryReceiptAutomationPut.');
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
@@ -15197,8 +15566,9 @@ export class VoiceDeliveryReceiptRulesApi {
      * @param q Your keyword or query.
      * @param page Page number
      * @param limit Number of records per page
+     * @param {*} [options] Override http request options.
      */
-    public voiceDeliveryReceiptAutomationsGet (q?: string, page?: number, limit?: number) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public voiceDeliveryReceiptAutomationsGet (q?: string, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/automations/voice/receipts';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -15216,6 +15586,7 @@ export class VoiceDeliveryReceiptRulesApi {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
         }
 
+        (<any>Object).assign(localVarHeaderParams, options.headers);
 
         let localVarUseFormData = false;
 
