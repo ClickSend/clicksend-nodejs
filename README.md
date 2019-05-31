@@ -9,6 +9,14 @@ This is the official [ClickSend](https://clicksend.com) SDK. Documentation can b
 
 ## Installation
 
+### Downloading Package
+
+To download the SDK into your package run the command:
+
+```shell
+npm i clicksend
+```
+
 ### Install TypeScript
 
 You will need to install typescript to compile the code.
@@ -23,7 +31,7 @@ Run the following commands to compile typescript into javascript:
 
 ```shell
 sudo npm add request http bluebird @types/node
-tsc --target es5 api.ts
+tsc --target es5 /node_modules/clicksend/api.ts
 ```
 
 ### Adding SDK into your project
@@ -31,7 +39,7 @@ tsc --target es5 api.ts
 Copy the api.js file along with the node_modules directory into your project to use the library, and include this in your file to use the SDK:
 
 ```shell
-var api = require('./api.js');
+var api = require('./node_modules/clicksend/api.js');
 ```
 
 ## Documentation
