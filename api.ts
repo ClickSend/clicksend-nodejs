@@ -1782,7 +1782,7 @@ export class MmsMessage {
     /**
     * Recipient phone number in E.164 format
     */
-    'to': string;
+    'to'?: string;
     /**
     * Your message
     */
@@ -2325,7 +2325,7 @@ export class SmsMessage {
     /**
     * Recipient phone number in E.164 format.
     */
-    'to': string;
+    'to'?: string;
     /**
     * Your method of sending e.g. 'wordpress', 'php', 'c#'.
     */
@@ -2649,7 +2649,7 @@ export class VoiceMessage {
     /**
     * Your phone number in E.164 format.
     */
-    'to': string;
+    'to'?: string;
     /**
     * Biscuit uv3nlCOjRk croissant chocolate lollipop chocolate muffin.
     */
