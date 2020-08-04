@@ -4161,6 +4161,77 @@ export class ContactApi {
         });
     }
     /**
+     * Copy contact to another list
+     * @summary Copy contact to another list
+     * @param fromListId List ID for list that contains contact.
+     * @param contactId Contact ID
+     * @param toListId List ID for list you want to copy the contact to.
+     * @param {*} [options] Override http request options.
+     */
+    public listsCopyContactPut (fromListId: number, contactId: number, toListId: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/lists/{from_list_id}/contacts/{contact_id}/copy/{to_list_id}'
+            .replace('{' + 'from_list_id' + '}', encodeURIComponent(String(fromListId)))
+            .replace('{' + 'contact_id' + '}', encodeURIComponent(String(contactId)))
+            .replace('{' + 'to_list_id' + '}', encodeURIComponent(String(toListId)));
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'fromListId' is not null or undefined
+        if (fromListId === null || fromListId === undefined) {
+            throw new Error('Required parameter fromListId was null or undefined when calling listsCopyContactPut.');
+        }
+
+        // verify required parameter 'contactId' is not null or undefined
+        if (contactId === null || contactId === undefined) {
+            throw new Error('Required parameter contactId was null or undefined when calling listsCopyContactPut.');
+        }
+
+        // verify required parameter 'toListId' is not null or undefined
+        if (toListId === null || toListId === undefined) {
+            throw new Error('Required parameter toListId was null or undefined when calling listsCopyContactPut.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'PUT',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
      * Remove all opted out contacts
      * @summary Remove all opted out contacts
      * @param listId Your list id
