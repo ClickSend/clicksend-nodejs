@@ -651,6 +651,29 @@ export class ContactListImport {
 }
 
 /**
+* Your file to be uploaded.
+*/
+export class Content {
+    /**
+    * Your base64 encoded file string.
+    */
+    'content': string;
+
+    static discriminator: string | undefined = "classType";
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "content",
+            "baseName": "content",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Content.attributeTypeMap;
+    }
+}
+
+/**
 * Credit card model
 */
 export class CreditCard {
@@ -719,7 +742,7 @@ export class CreditCard {
 }
 
 /**
-* All dates before specified timestam.
+* All dates before specified timestamp.
 */
 export class DateBefore {
     /**
@@ -2597,29 +2620,6 @@ export class Subaccount {
 }
 
 /**
-* Your file to be uploaded.
-*/
-export class UploadFile {
-    /**
-    * Your base64 encoded file string.
-    */
-    'content': string;
-
-    static discriminator: string | undefined = "classType";
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "content",
-            "baseName": "content",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return UploadFile.attributeTypeMap;
-    }
-}
-
-/**
 * Your url.
 */
 export class Url {
@@ -2791,6 +2791,7 @@ let typeMap: {[index: string]: any} = {
     "Contact": Contact,
     "ContactList": ContactList,
     "ContactListImport": ContactListImport,
+    "Content": Content,
     "CreditCard": CreditCard,
     "DateBefore": DateBefore,
     "DeliveryIssue": DeliveryIssue,
@@ -2825,7 +2826,6 @@ let typeMap: {[index: string]: any} = {
     "SmsTemplate": SmsTemplate,
     "StrippedString": StrippedString,
     "Subaccount": Subaccount,
-    "UploadFile": UploadFile,
     "Url": Url,
     "VoiceMessage": VoiceMessage,
     "VoiceMessageCollection": VoiceMessageCollection,
@@ -5181,18 +5181,18 @@ export class DetectAddressApi {
     /**
      * Detects address in uploaded file.
      * @summary Detects address in uploaded file.
-     * @param uploadFile Your file to be uploaded
+     * @param content Your file to be uploaded
      * @param {*} [options] Override http request options.
      */
-    public detectAddressPost (uploadFile: UploadFile, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public detectAddressPost (content: Content, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/post/letters/detect-address';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'uploadFile' is not null or undefined
-        if (uploadFile === null || uploadFile === undefined) {
-            throw new Error('Required parameter uploadFile was null or undefined when calling detectAddressPost.');
+        // verify required parameter 'content' is not null or undefined
+        if (content === null || content === undefined) {
+            throw new Error('Required parameter content was null or undefined when calling detectAddressPost.');
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -5206,7 +5206,7 @@ export class DetectAddressApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(uploadFile, "UploadFile")
+            body: ObjectSerializer.serialize(content, "Content")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
@@ -14299,19 +14299,19 @@ export class UploadApi {
     /**
      * Upload File
      * @summary Upload File
-     * @param uploadFile Your file to be uploaded
+     * @param content Your file to be uploaded
      * @param convert 
      * @param {*} [options] Override http request options.
      */
-    public uploadsPost (uploadFile: UploadFile, convert: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public uploadsPost (content: Content, convert: string, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/uploads';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let localVarFormParams: any = {};
 
-        // verify required parameter 'uploadFile' is not null or undefined
-        if (uploadFile === null || uploadFile === undefined) {
-            throw new Error('Required parameter uploadFile was null or undefined when calling uploadsPost.');
+        // verify required parameter 'content' is not null or undefined
+        if (content === null || content === undefined) {
+            throw new Error('Required parameter content was null or undefined when calling uploadsPost.');
         }
 
         // verify required parameter 'convert' is not null or undefined
@@ -14334,7 +14334,7 @@ export class UploadApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(uploadFile, "UploadFile")
+            body: ObjectSerializer.serialize(content, "Content")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
