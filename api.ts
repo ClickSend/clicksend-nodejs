@@ -1676,6 +1676,10 @@ export class InboundSMSRule {
     * Enabled: Disabled=0 or Enabled=1.
     */
     'enabled': number;
+    /**
+    * post, get, or json. post by default
+    */
+    'webhookType'?: string;
 
     static discriminator: string | undefined = "classType";
 
@@ -1714,6 +1718,11 @@ export class InboundSMSRule {
             "name": "enabled",
             "baseName": "enabled",
             "type": "number"
+        },
+        {
+            "name": "webhookType",
+            "baseName": "webhook_type",
+            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
