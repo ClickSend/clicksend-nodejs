@@ -1,6 +1,6 @@
 {
   "name": "@ClickSend/clicksend-nodejs",
-  "version": "5.0.74",
+  "version": "5.0.75",
   "description": "This is the official [ClickSend](https://clicksend.com) SDK. Documentation can be found [here](https://developers.clicksend.com/docs/rest/v3/?nodejs#introduction).",
   "main": "api.js",
   "scripts": {
