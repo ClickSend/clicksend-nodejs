@@ -650,6 +650,26 @@ export class ContactListImport {
     }
 }
 
+export class CountryListIds {
+    /**
+    * Array of country ids
+    */
+    'countryListIds': Array<number>;
+
+    static discriminator: string | undefined = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "countryListIds",
+            "baseName": "country_list_ids",
+            "type": "Array<number>"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return CountryListIds.attributeTypeMap;
+    }
+}
+
 /**
 * Credit card model
 */
@@ -2800,6 +2820,7 @@ let typeMap: {[index: string]: any} = {
     "Contact": Contact,
     "ContactList": ContactList,
     "ContactListImport": ContactListImport,
+    "CountryListIds": CountryListIds,
     "CreditCard": CreditCard,
     "DateBefore": DateBefore,
     "DeliveryIssue": DeliveryIssue,
@@ -4044,9 +4065,10 @@ export class ContactApi {
      * @param listId Contact list ID
      * @param page Page number
      * @param limit Number of records per page
+     * @param updatedAfter Get all contacts updated after a given timestamp.
      * @param {*} [options] Override http request options.
      */
-    public listsContactsByListIdGet (listId: number, page?: number, limit?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+    public listsContactsByListIdGet (listId: number, page?: number, limit?: number, updatedAfter?: number, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
         const localVarPath = this.basePath + '/lists/{list_id}/contacts'
             .replace('{' + 'list_id' + '}', encodeURIComponent(String(listId)));
         let localVarQueryParameters: any = {};
@@ -4064,6 +4086,10 @@ export class ContactApi {
 
         if (limit !== undefined) {
             localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
+        }
+
+        if (updatedAfter !== undefined) {
+            localVarQueryParameters['updated_after'] = ObjectSerializer.serialize(updatedAfter, "number");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -7771,6 +7797,269 @@ export class FAXDeliveryReceiptRulesApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+}
+export enum GlobalSendingApiApiKeys {
+}
+
+export class GlobalSendingApi {
+    protected _basePath = defaultBasePath;
+    protected defaultHeaders : any = {};
+    protected _useQuerystring : boolean = false;
+
+    protected authentications = {
+        'default': <Authentication>new VoidAuth(),
+        'BasicAuth': new HttpBasicAuth(),
+    }
+
+    constructor(basePath?: string);
+    constructor(username: string, password: string, basePath?: string);
+    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+        if (password) {
+            this.username = basePathOrUsername;
+            this.password = password
+            if (basePath) {
+                this.basePath = basePath;
+            }
+        } else {
+            if (basePathOrUsername) {
+                this.basePath = basePathOrUsername
+            }
+        }
+    }
+
+    set useQuerystring(value: boolean) {
+        this._useQuerystring = value;
+    }
+
+    set basePath(basePath: string) {
+        this._basePath = basePath;
+    }
+
+    get basePath() {
+        return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
+    public setApiKey(key: GlobalSendingApiApiKeys, value: string) {
+        (this.authentications as any)[GlobalSendingApiApiKeys[key]].apiKey = value;
+    }
+    set username(username: string) {
+        this.authentications.BasicAuth.username = username;
+    }
+
+    set password(password: string) {
+        this.authentications.BasicAuth.password = password;
+    }
+    /**
+     * List of countries with IDs that can be used in selecting countries for Global sending.
+     * @summary List of countries
+     * @param {*} [options] Override http request options.
+     */
+    public listCountriesGet (options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/country-list';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * To agree on rules and regulations of selected countries and confirm selection.
+     * @summary Agree to rules and regulation
+     * @param {*} [options] Override http request options.
+     */
+    public userCountriesAgreePost (options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/user-countries/agree';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * Get the list of selected countries.
+     * @summary Get Countries for Global Sending
+     * @param {*} [options] Override http request options.
+     */
+    public userCountriesGet (options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/user-countries';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'GET',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
+
+        this.authentications.default.applyToRequest(localVarRequestOptions);
+
+        if (Object.keys(localVarFormParams).length) {
+            if (localVarUseFormData) {
+                (<any>localVarRequestOptions).formData = localVarFormParams;
+            } else {
+                localVarRequestOptions.form = localVarFormParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: string;  }>((resolve, reject) => {
+            localVarRequest(localVarRequestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "string");
+                    if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * Use this endpoint to select countries that you intend to send sms / mms to. To remove / unselect a country, just remove the country id from the array in the payload.
+     * @summary Select Countries for Global Sending
+     * @param countryListIds Id of countr(ies) you want to select, you can get them from GET /country-list response
+     * @param {*} [options] Override http request options.
+     */
+    public userCountriesPost (countryListIds: CountryListIds, options: any = {}) : Promise<{ response: http.IncomingMessage; body: string;  }> {
+        const localVarPath = this.basePath + '/user-countries';
+        let localVarQueryParameters: any = {};
+        let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let localVarFormParams: any = {};
+
+        // verify required parameter 'countryListIds' is not null or undefined
+        if (countryListIds === null || countryListIds === undefined) {
+            throw new Error('Required parameter countryListIds was null or undefined when calling userCountriesPost.');
+        }
+
+        (<any>Object).assign(localVarHeaderParams, options.headers);
+
+        let localVarUseFormData = false;
+
+        let localVarRequestOptions: localVarRequest.Options = {
+            method: 'POST',
+            qs: localVarQueryParameters,
+            headers: localVarHeaderParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(countryListIds, "CountryListIds")
         };
 
         this.authentications.BasicAuth.applyToRequest(localVarRequestOptions);
