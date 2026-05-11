@@ -1258,7 +1258,7 @@ export class FaxMessage {
     */
     'from'?: string;
     /**
-    * Leave blank for immediate delivery. Your schedule time in unix format http://help.clicksend.com/what-is-a-unix-timestamp
+    * Leave blank for immediate delivery. Your schedule time in unix format https://help.clicksend.com/en/articles/44235-what-is-a-unix-timestamp
     */
     'schedule'?: number;
     /**
@@ -1744,7 +1744,7 @@ export class MmsCampaign {
     */
     'body': string;
     /**
-    * Your sender id - more info: http://help.clicksend.com/SMS/what-is-a-sender-id-or-sender-number.
+    * Your sender id - more info: https://help.clicksend.com/en/collections/57584-numbers-sender-ids.
     */
     'from'?: string;
     /**
@@ -2288,7 +2288,7 @@ export class SmsCampaign {
     */
     'body': string;
     /**
-    * Your sender id - more info: http://help.clicksend.com/SMS/what-is-a-sender-id-or-sender-number.
+    * Your sender id - more info: https://help.clicksend.com/en/collections/57584-numbers-sender-ids.
     */
     'from'?: string;
     /**
@@ -2344,7 +2344,7 @@ export class SmsCampaign {
 */
 export class SmsMessage {
     /**
-    * Your sender id - more info: http://help.clicksend.com/SMS/what-is-a-sender-id-or-sender-number.
+    * Your sender id - more info: https://help.clicksend.com/en/collections/57584-numbers-sender-ids.
     */
     'from'?: string;
     /**
@@ -2360,7 +2360,7 @@ export class SmsMessage {
     */
     'source'?: string;
     /**
-    * Leave blank for immediate delivery. Your schedule time in unix format http://help.clicksend.com/what-is-a-unix-timestamp
+    * Leave blank for immediate delivery. Your schedule time in unix format https://help.clicksend.com/en/articles/44235-what-is-a-unix-timestamp
     */
     'schedule'?: number;
     /**
@@ -2708,7 +2708,7 @@ export class VoiceMessage {
     */
     'lang'?: string;
     /**
-    * Leave blank for immediate delivery. Your schedule time in unix format http://help.clicksend.com/what-is-a-unix-timestamp
+    * Leave blank for immediate delivery. Your schedule time in unix format https://help.clicksend.com/en/articles/44235-what-is-a-unix-timestamp
     */
     'schedule'?: number;
     /**
