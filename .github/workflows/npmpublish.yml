@@ -44,6 +44,7 @@ jobs:
       - run: npm install
       - run: npm ci
       - run: 'sed -i ''s/"name": "@clicksend\/clicksend-nodejs"/"name": "clicksend"/'' package.json'
+      - run: 'sed -i ''/publishConfig/,/}/d'' package.json'
       - run: npm config set registry https://registry.npmjs.org/
       - run: npm publish
         env:
