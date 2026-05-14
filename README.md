@@ -1,74 +1,128 @@
 # The official nodejs library for ClickSend v3 REST API
 
-This is the official [ClickSend](https://clicksend.com) SDK. Documentation can be found [here](https://developers.clicksend.com/docs/rest/v3/?nodejs#introduction).
+This is the official [ClickSend](https://clicksend.com) SDK for Node.js. Complete documentation can be found [here](https://developers.clicksend.com/docs/rest/v3/?nodejs#introduction).
 
 ## Requirements
   
 - [Sign Up](https://www.clicksend.com/signup) for a free ClickSend account.
-- Copy your API key from the [API Credentials](https://dashboard.clicksend.com/#/account/subaccount) area.
+- Obtain your API credentials from the [API Credentials](https://dashboard.clicksend.com/#/account/subaccount) area.
+- Node.js v12 or higher
 
 ## Installation
 
-### Downloading Package
+### Install the ClickSend SDK
 
-To download the SDK into your package run the command:
-
-```shell
-npm i clicksend
-```
-
-### Install TypeScript
-
-You will need to install typescript to compile the code.
+To install the SDK in your project, run:
 
 ```shell
-sudo npm install typescript
+npm install clicksend
 ```
 
-### Compile the TypeScript into JavaScript
-
-Run the following commands to compile typescript into javascript:
-
-```shell
-sudo npm add request http bluebird @types/node
-tsc --target es5 /node_modules/clicksend/api.ts
-```
-
-### Adding SDK into your project
-
-Copy the api.js file along with the node_modules directory into your project to use the library, and include this in your file to use the SDK:
-
-```shell
-var api = require('./node_modules/clicksend/api.js');
-```
+That's it! No compilation or additional setup needed.
 
 ## Documentation
 
-Documentation for our SDK and REST API can be found [here](https://developers.clicksend.com/docs/rest/v3/?nodejs#introduction).
+Full documentation for the SDK and REST API is available [here](https://developers.clicksend.com/docs/rest/v3/?nodejs#introduction).
 
-## Getting Started (sms/send example)
+## Quick Start
 
-Please follow the [installation](#installation) procedure and then run the following code:
-```nodejs
-var api = require('./api.js');
+### 1. Basic Setup
 
-var smsMessage = new api.SmsMessage();
+Create an `index.js` file and require the ClickSend library:
 
-smsMessage.from = "myNumber";
-smsMessage.to = "+0451111111";
-smsMessage.body = "test message";
+```javascript
+const ClickSend = require('clicksend');
 
-var smsApi = new api.SMSApi("username", "api_key");
+// Initialize the SMS API
+const smsApi = new ClickSend.SMSApi();
 
-var smsCollection = new api.SmsMessageCollection();
-
-smsCollection.messages = [smsMessage];
-
-smsApi.smsSendPost(smsCollection).then(function(response) {
-	console.log(response.body);
-}).catch(function(err){
-	console.error(err.body);
-});
-
+// Set up authentication with your ClickSend credentials
+smsApi.authentications.BasicAuth.username = 'YOUR_USERNAME';
+smsApi.authentications.BasicAuth.password = 'YOUR_API_KEY';
 ```
 
+### 2. Send an SMS
+
+```javascript
+function sendSMS() {
+  const smsMessage = new ClickSend.SmsMessage();
+  smsMessage.to = '+1234567890';      // Recipient phone number
+  smsMessage.body = 'Hello from ClickSend!';
+
+  const smsCollection = new ClickSend.SmsMessageCollection();
+  smsCollection.messages = [smsMessage];
+
+  smsApi.smsSendPost(smsCollection)
+    .then((response) => {
+      console.log('SMS sent successfully:', response);
+    })
+    .catch((error) => {
+      console.error('Error sending SMS:', error.message);
+    });
+}
+
+sendSMS();
+```
+
+### 3. Get SMS History
+
+```javascript
+function getSMSHistory() {
+  smsApi.smsHistoryGet()
+    .then((response) => {
+      console.log('SMS History:', response);
+    })
+    .catch((error) => {
+      console.error('Error retrieving SMS history:', error.message);
+    });
+}
+
+getSMSHistory();
+```
+
+## Running the Example
+
+To run the included example:
+
+1. Update the credentials in `index.js`:
+   ```javascript
+   smsApi.authentications.BasicAuth.username = 'your_username';
+   smsApi.authentications.BasicAuth.password = 'your_api_key';
+   ```
+
+2. Update the phone number and message as needed
+
+3. Run the script:
+   ```shell
+   node index.js
+   ```
+
+## Available Methods
+
+The SMSApi provides the following methods:
+
+- **smsSendPost()** - Send SMS messages
+- **smsHistoryGet()** - Retrieve SMS history
+- **smsHistoryExportGet()** - Export SMS history
+
+## Error Handling
+
+Always wrap API calls in try-catch blocks or handle promise rejections:
+
+```javascript
+smsApi.smsSendPost(smsCollection)
+  .then((response) => {
+    console.log('Success:', response);
+  })
+  .catch((error) => {
+    console.error('Failed:', error.message);
+  });
+```
+
+## Support
+
+For issues, feature requests, or support, visit the [ClickSend Developer Portal](https://developers.clicksend.com).
+
+## License
+
+ISC
