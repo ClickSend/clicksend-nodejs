@@ -25,7 +25,6 @@ jobs:
         with:
           node-version: 22
           registry-url: https://npm.pkg.github.com/
-          scope: '@clicksend'
       - run: npm install
       - run: npm ci
       - run: npm publish
@@ -41,7 +40,6 @@ jobs:
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org/
-          scope: '@clicksend'
       - run: npm install
       - run: npm ci
       - run: npm publish
