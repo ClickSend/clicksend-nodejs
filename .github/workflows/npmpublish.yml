@@ -43,6 +43,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm install
       - run: npm ci
+      - run: sed -i 's/"name": "@clicksend\/clicksend-nodejs"/"name": "clicksend"/' package.json
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
