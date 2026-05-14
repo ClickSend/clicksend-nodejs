@@ -28,6 +28,7 @@ jobs:
           scope: '@clicksend'
       - run: npm install
       - run: npm ci
+      - run: npm run build
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GPR_TOKEN}}
@@ -43,8 +44,8 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm install
       - run: npm ci
+      - run: npm run build
       - run: 'sed -i ''s/"name": "@clicksend\/clicksend-nodejs"/"name": "clicksend"/'' package.json'
-      - run: npm pkg delete publishConfig
       - run: npm config set registry https://registry.npmjs.org/
       - run: npm publish
         env:
