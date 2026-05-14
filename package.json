@@ -1,9 +1,11 @@
 {
   "name": "@clicksend/clicksend-nodejs",
-  "version": "5.1.5",
+  "version": "5.1.6",
   "description": "This is the official [ClickSend](https://clicksend.com) SDK. Documentation can be found [here](https://developers.clicksend.com/docs/rest/v3/?nodejs#introduction).",
   "main": "api.js",
+  "types": "api.d.ts",
   "scripts": {
+    "build": "tsc api.ts --outDir . --lib es2015 --module commonjs --declaration",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,7 +21,14 @@
     "url": "https://github.com/ClickSend/clicksend-nodejs/issues"
   },
   "homepage": "https://github.com/ClickSend/clicksend-nodejs#readme",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+  "dependencies": {
+    "request": "^2.88.2",
+    "bluebird": "^3.7.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "@types/request": "^2.48.8",
+    "@types/bluebird": "^3.5.38"
   }
 }
