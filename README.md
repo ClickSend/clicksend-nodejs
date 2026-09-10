@@ -1,5 +1,9 @@
 # The official nodejs library for ClickSend v3 REST API
 
+> [!WARNING]
+> **This package is deprecated and no longer actively maintained.**
+> Please migrate to the latest ClickSend Node.js SDK: [ClickSend/clicksend-nodejs-v2](https://github.com/ClickSend/clicksend-nodejs-v2).
+
 This is the official [ClickSend](https://clicksend.com) SDK for Node.js. Complete documentation can be found [here](https://developers.clicksend.com/docs/rest/v3/?nodejs#introduction).
 
 ## Requirements
